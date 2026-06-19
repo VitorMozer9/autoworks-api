@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 })
 export class NavBar {
   // Lista de opções da navbar
-  itens = ['SERVIÇOS', 'AGENDAMENTOS', 'PEÇAS', 'CADASTROS'];
+  itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS', 'PEÇAS', 'CADASTROS'];
 
   // Define qual item começa selecionado por padrão
   itemSelecionado: string = 'AGENDAMENTOS';
