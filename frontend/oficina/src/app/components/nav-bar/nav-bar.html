@@ -1,0 +1,14 @@
+<nav class="navbar">
+  <ul>
+    @for (item of itens; track item) {
+      <li
+        (click)="selecionar(item)"
+        [class.ativo]="item === itemSelecionado">
+        {{ item }}
+      </li>
+    } @empty {
+      <li>Falha ao carregar navbar.</li>
+    }
+  </ul>
+  <div class="barra-vermelha"></div>
+</nav>
