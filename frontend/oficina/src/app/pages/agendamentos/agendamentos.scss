@@ -23,7 +23,7 @@ label {
   text-transform: uppercase;
 }
 
-/* Estilo idêntico ao seu print para Inputs e Selects */
+/* Estilo dos Inputs e Selects */
 input, .select-field {
   width: 100%;
   height: 49px;
@@ -42,11 +42,11 @@ input::placeholder {
   color: #8C8C8C;
 }
 
+/*Div dos botões*/
 .botoes {
   display: flex;
   justify-content: center;
   width: 416px;
   gap: 12px;
   margin-top: 6px;
-
 }

@@ -23,13 +23,13 @@ export class Agendamentos {
     nomeMecanico: ''
   };
 
-  // Função disparada ao clicar no botão
+  // Realiza o agendamento do cliente
   agendar() {
     alert('Agendamento realizado com sucesso! Veja no console do navegador.');
     console.log(this.dadosForm);
   }
 
-  // Adicione esta função dentro da sua classe no arquivo .component.ts
+  // Limpa os dados do formulário
   limpar() {
     this.dadosForm = {
       servico: '',
