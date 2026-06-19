@@ -1,0 +1,50 @@
+<app-base-ui>
+  <app-nav-bar></app-nav-bar>
+  <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Agendamento</title>
+    </head>
+    <body>
+      <div class="formulario">
+        <!-- Select do Topo -->
+        <label>Selecione o tipo do serviço:</label>
+        <select [(ngModel)]="dadosForm.servico" name="servico" class="select-field">
+          <option value="">Tipo de serviço desejado</option>
+          <option value="revisao">Revisão Geral</option>
+          <option value="troca-oleo">Troca de Óleo</option>
+        </select>
+
+          <!-- Bloco Cliente -->
+        <div class="sessao-formulario">
+          <label>Informações do Cliente:</label>
+          <input type="text" [(ngModel)]="dadosForm.nomeCliente" name="nomeCliente" placeholder="Nome...">
+          <input type="text" [(ngModel)]="dadosForm.telefone" name="telefone" placeholder="Telefone...">
+          <input type="text" [(ngModel)]="dadosForm.email" name="email" placeholder="Email...">
+          <input type="text" [(ngModel)]="dadosForm.cpf" name="cpf" placeholder="CPF...">
+          <input type="text" [(ngModel)]="dadosForm.endereco" name="endereco" placeholder="Endereço...">
+        </div>
+        <!-- Bloco Veículo -->
+        <div class="sessao-formulario">
+          <label>Informações do Veículo:</label>
+          <input type="text" [(ngModel)]="dadosForm.placa" name="placa" placeholder="Placa...">
+          <input type="text" [(ngModel)]="dadosForm.modelo" name="modelo" placeholder="Modelo...">
+        </div>
+
+        <!-- Bloco Mecânico -->
+        <div class="sessao-formulario">
+          <label>Mecânico Responsável:</label>
+          <input type="text" [(ngModel)]="dadosForm.nomeMecanico" name="nomeMecanico" placeholder="Nome...">
+        </div>
+
+        <!-- Botões de limpar e de envio -->
+        <div class="botoes">
+          <app-botao-secundario textoBotao="Limpar" (click)="limpar()"></app-botao-secundario>
+          <app-botao-secundario textoBotao="Agendar" (click)="agendar()"></app-botao-secundario>
+        </div>
+      </div>
+    </body>
+  </html>
+</app-base-ui>
