@@ -1,0 +1,31 @@
+<app-base-ui>
+  <!DOCTYPE html>
+  <html lang="pt-br">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Login</title>
+    </head>
+    <body>
+      <div class="boxes">
+        <div class="cadastro-box">
+          <h1>Cadastre-se</h1>
+          <div class="inputs-cadastro">
+            <input type="text" [(ngModel)]="cadastro.email" name="email" placeholder="Email...">
+            <input type="password" [(ngModel)]="cadastro.senha" name="password" placeholder="Senha...">
+          </div>
+          <app-botao-primario textoBotao="Cadastrar" (click)="cadastrarUsuario()"></app-botao-primario>
+        </div>
+
+        <div class="login-box">
+          <h1>Login</h1>
+          <div class="inputs-login">
+            <input type="text" [(ngModel)]="login.email" name="email" placeholder="Email...">
+            <input type="password" [(ngModel)]="login.senha" name="password" placeholder="Senha...">
+          </div>
+          <app-botao-primario textoBotao="Entrar" (click)="logarUsuario()"></app-botao-primario>
+        </div>
+      </div>
+    </body>
+  </html>
+</app-base-ui>
