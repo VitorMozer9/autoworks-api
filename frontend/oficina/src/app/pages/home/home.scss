@@ -1,0 +1,55 @@
+// Estilo da página inicial
+.homepage{
+    max-width: auto;
+    margin: 0 auto;
+    padding: 13rem 10rem;
+    background-image: url('/backgrounds/backgroundHome.png');
+    background-size: cover;
+    color:black;
+}
+
+.logo-section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8rem
+}
+
+.logo-area{
+    p {
+        font-family: Impact, 'Arial Black', sans-serif;
+        color: #F1C01D;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 1.5rem;
+        color: #F1C01D;;
+    }
+
+    img {
+        width: 700px;
+        height: auto;
+    }
+}
+
+.brand-area{
+    h2{
+        font-family: Impact, 'Arial Black', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 2rem;
+        color: #EAEAEA;
+    }
+}
+
+// Logos das marcas trabalhadas
+.brand-logos{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+
+    img{
+        width: 90px;
+        height: auto;
+    }
+}
+
