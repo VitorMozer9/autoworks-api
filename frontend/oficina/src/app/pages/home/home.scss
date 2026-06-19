@@ -2,7 +2,7 @@
 .homepage{
     max-width: auto;
     margin: 0 auto;
-    padding: 13rem 10rem;
+    padding: 7rem 7rem;
     background-image: url('/backgrounds/backgroundHome.png');
     background-size: cover;
     color:black;
@@ -21,8 +21,10 @@
         color: #F1C01D;
         text-transform: uppercase;
         letter-spacing: 1px;
-        font-size: 1.5rem;
-        color: #F1C01D;;
+        font-size: 3rem;
+        color: #F1C01D;
+        margin: 0;
+       
     }
 
     img {
@@ -32,8 +34,12 @@
 }
 
 .brand-area{
+    text-align: center;
+    width: 100%;
+
     h2{
         font-family: Impact, 'Arial Black', sans-serif;
+        font-size: 3rem;
         text-transform: uppercase;
         letter-spacing: 1px;
         margin-bottom: 2rem;
@@ -45,11 +51,46 @@
 .brand-logos{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
     gap: 1rem;
 
     img{
-        width: 90px;
+        width: 80px;
         height: auto;
+        object-fit: contain;
     }
 }
+
+// gambiarra para ajustar os tamanhos das logos, pois cada imagem tem uma proporção diferente
+.brand-logo-item-honda{
+    img{
+        width: 110px;
+    }
+}
+
+.brand-logo-item-hyundai{
+    img{
+        width: 120px;
+    }
+}
+
+.brand-logo-item-nissan{
+    img{
+        width: 200px;
+    }
+}
+.brand-logo-item-jeep{
+    img{
+        width: 200px;
+    }
+}
+
+.brand-logo-item-toyota{
+    img{
+        width: 200px;
+    }
+}
+
+
 
