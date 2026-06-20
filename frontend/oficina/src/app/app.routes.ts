@@ -5,10 +5,6 @@ import { Agendamento } from './pages/agendamento/agendamento';
 
 export const routes: Routes = [
   {
-    path: "**",
-    redirectTo: "login"
-  },
-  {
     path: "",
     redirectTo: "login",
     pathMatch: "full"
@@ -25,5 +21,8 @@ export const routes: Routes = [
     path: "agendamento",
     component: Agendamento
   },
-
+  {
+    path: "**",
+    redirectTo: "login"
+  }
 ];
