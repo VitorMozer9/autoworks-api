@@ -34,6 +34,9 @@ export class NavBar implements OnInit {
       case 'AGENDAMENTOS':
         this.router.navigate(['/agendamentos']);
         break;
+      case 'SERVIÇOS':
+        this.router.navigate(['/servico']);
+        break
     }
   }
 }
