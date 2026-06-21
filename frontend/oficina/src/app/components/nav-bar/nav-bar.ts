@@ -21,6 +21,8 @@ export class NavBar implements OnInit {
       this.itemSelecionado = 'HOME';
     } else if (urlCorrente.includes('agendamento')) {
       this.itemSelecionado = 'AGENDAMENTOS';
+    } else if (urlCorrente.includes('servico')) {
+      this.itemSelecionado = 'SERVIÇOS';
     }
   }
 
