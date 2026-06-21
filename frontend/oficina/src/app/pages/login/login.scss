@@ -2,7 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center; /* Centraliza verticalmente */
-  min-height: 100vh; /* Ocupa a altura total da tela */
+  height: calc(100vh - 4rem); /* Ocupa a altura total da tela */
+  overflow: hidden;
   gap: 50px; /* Espaço entre as caixas vermelhas */
   color: #ffffff;
   font-family: 'Arial Black', sans-serif;
