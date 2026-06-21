@@ -1,0 +1,93 @@
+<app-base-ui>
+  <app-nav-bar></app-nav-bar>
+  <div class="ordens-de-servico">
+    @if (agendamentos.length === 0) {
+      <div class="sem-dados">
+        <h1>Não há ordens de serviço no momento</h1>
+      </div>
+    } @else {
+      @for (item of agendamentos; track item.id) {
+        <div class="agendamento-card">
+          <div class="card-header">
+            <p><strong>Serviço:</strong> {{ item.servico === 'revisao' ? 'Revisão Geral' : item.servico === 'troca-oleo' ? 'Troca de Óleo' : item.servico }}</p>
+          </div>
+          <div class="card-body">
+            <p><strong>Cliente:</strong> {{ item.nomeCliente }}</p>
+            <p><strong>Veículo:</strong> {{ item.modelo }}</p>
+            <p><strong>Valor:</strong> {{ item.valor | currency: 'BRL' }}</p>
+            <p><strong>Status:</strong> {{ item.status }}</p>
+
+            <div class="acoes-card">
+              <app-botao-terceiro textoBotao="Cancelar" corBotao="#BC0808" (click)="cancelarAgendamento(item.id!)"></app-botao-terceiro>
+              <app-botao-terceiro textoBotao="Editar" corBotao="#B38114" (click)="abrirEdicao(item)"></app-botao-terceiro>
+              <app-botao-terceiro textoBotao="Detalhes" corBotao="#978E8E" (click)="abrirDetalhes(item)"></app-botao-terceiro>
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+  @if (modalAberto) {
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <h2>{{ modoEdicao ? 'Editar Agendamento' : 'Detalhes do Agendamento' }}</h2>
+
+        <div class="modal-body">
+          <label>Serviço:</label>
+          @if (modoEdicao) {
+            <select [(ngModel)]="itemSelecionado.servico">
+              <option value="revisao">Revisão Geral</option>
+              <option value="troca-oleo">Troca de Óleo</option>
+            </select>
+          } @else { <p>{{ itemSelecionado.servico === 'revisao' ? 'Revisão Geral' : itemSelecionado.servico === 'troca-oleo' ? 'Troca de Óleo' : itemSelecionado.servico }}</p> }
+
+          <label>Cliente:</label>
+          @if (modoEdicao) { <input [(ngModel)]="itemSelecionado.nomeCliente"> }
+          @else { <p>{{ itemSelecionado.nomeCliente }}</p> }
+
+          <label>Telefone:</label>
+          @if (modoEdicao) { <input [(ngModel)]="itemSelecionado.telefone"> }
+          @else { <p>{{ itemSelecionado.telefone }}</p> }
+
+          <label>Email:</label>
+          @if (modoEdicao) { <input [(ngModel)]="itemSelecionado.email"> }
+          @else { <p>{{ itemSelecionado.email }}</p> }
+
+          <label>CPF:</label>
+          @if (modoEdicao) { <input [(ngModel)]="itemSelecionado.cpf"> }
+          @else { <p>{{ itemSelecionado.cpf }}</p> }
+
+          <label>Endereço:</label>
+          @if (modoEdicao) { <input [(ngModel)]="itemSelecionado.endereco"> }
+          @else { <p>{{ itemSelecionado.endereco }}</p> }
+
+          <label>Placa:</label>
+          @if (modoEdicao) { <input [(ngModel)]="itemSelecionado.placa"> }
+          @else { <p>{{ itemSelecionado.placa }}</p> }
+
+          <label>Veículo (Modelo):</label>
+          @if (modoEdicao) { <input [(ngModel)]="itemSelecionado.modelo"> }
+          @else { <p>{{ itemSelecionado.modelo }}</p> }
+
+          <label>Mecânico Responsável:</label>
+          @if (modoEdicao) { <input [(ngModel)]="itemSelecionado.nomeMecanico"> }
+          @else { <p>{{ itemSelecionado.nomeMecanico }}</p> }
+
+          <label>Valor:</label>
+          @if (modoEdicao) { <input [(ngModel)]="itemSelecionado.valor"> }
+          @else { <p>{{ itemSelecionado.valor }}</p> }
+        </div>
+
+        <div class="modal-footer">
+          <button (click)="fecharModal()">Fechar</button>
+          @if (modoEdicao) {
+            <button class="btn-salvar" (click)="salvarEdicao()">Salvar</button>
+        }
+        </div>
+      </div>
+    </div>
+  }
+  <div class="adicionar-agendamento">
+    <app-botao-secundario textoBotao="+ Adicionar" (click)="irParaNovoAgendamento()"></app-botao-secundario>
+  </div>
+</app-base-ui>
