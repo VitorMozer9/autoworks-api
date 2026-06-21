@@ -1,96 +1,97 @@
-// Estilo da página inicial
-.homepage{
-    max-width: auto;
-    margin: 0 auto;
-    padding: 7rem 7rem;
-    background-image: url('/backgrounds/backgroundHome.png');
-    background-size: cover;
-    color:black;
+/* Configuração do fundo para ocupar 100% da tela sem rolagem */
+.homepage {
+  width: 100%;
+  height: calc(100vh - 66px); /* Desconta o tamanho da navbar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4rem;
+  box-sizing: border-box;
+  background-image: url('/backgrounds/backgroundHome.png');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
 }
 
-.logo-section{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 8rem
+/* O container principal que vai agrupar os dois lados */
+.logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px; /* Limita a largura máxima para não esticar em monitores ultrawide */
+  gap: 4rem; /* Cria um belo espaço entre a logo principal e a grade de marcas */
 }
 
-.logo-area{
-    p {
-        font-family: Impact, 'Arial Black', sans-serif;
-        color: #F1C01D;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 3rem;
-        color: #F1C01D;
-        margin: 0;
-       
-    }
+/* COLUNA DA ESQUERDA (Logo Principal) */
+.logo-area {
+  flex: 1; /* Pede para ocupar 50% do espaço disponível */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 
-    img {
-        width: 700px;
-        height: auto;
-    }
+  img {
+    width: 100%; /* Torna a imagem responsiva */
+    max-width: 600px; /* Impede que ela passe desse tamanho */
+    height: auto;
+  }
+
+  p {
+    font-family: Impact, 'Arial Black', sans-serif;
+    color: #F1C01D;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 2.2rem; /* Ajustado para não quebrar linha facilmente */
+    margin-top: 1rem;
+    margin-bottom: 0;
+  }
 }
 
-.brand-area{
-    text-align: center;
+/* COLUNA DA DIREITA (Marcas) */
+.brand-area {
+  flex: 1; /* Pede para ocupar os outros 50% do espaço disponível */
+  text-align: center;
+
+  h2 {
+    font-family: Impact, 'Arial Black', sans-serif;
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 3rem;
+    color: #EAEAEA;
+    margin-top: 0;
+  }
+}
+
+/* A grade das marcas */
+.brand-logos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas de tamanhos iguais */
+  justify-items: center;
+  align-items: center;
+  gap: 2rem 1rem; /* Espaçamento: 2rem na vertical e 1rem na horizontal */
+
+  img {
     width: 100%;
-
-    h2{
-        font-family: Impact, 'Arial Black', sans-serif;
-        font-size: 3rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 2rem;
-        color: #EAEAEA;
-    }
+    max-width: 90px; /* Tamanho base padrão para as logos menores */
+    height: auto;
+    object-fit: contain;
+  }
 }
 
-// Logos das marcas trabalhadas
-.brand-logos{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    align-items: center;
-    gap: 1rem;
-
-    img{
-        width: 80px;
-        height: auto;
-        object-fit: contain;
-    }
+/* Suas adaptações de tamanhos das logos usando max-width em vez de width fixo */
+/* Assim elas mantêm a proporção sem estourar as células da grade (grid) */
+.brand-logo-item-honda img {
+  max-width: 110px;
 }
 
-// gambiarra para ajustar os tamanhos das logos, pois cada imagem tem uma proporção diferente
-.brand-logo-item-honda{
-    img{
-        width: 110px;
-    }
+.brand-logo-item-hyundai img {
+  max-width: 120px;
 }
 
-.brand-logo-item-hyundai{
-    img{
-        width: 120px;
-    }
+.brand-logo-item-nissan img,
+.brand-logo-item-jeep img,
+.brand-logo-item-toyota img {
+  max-width: 140px; /* Ajustado de 200px para 140px para caber melhor na grade de 3 */
 }
-
-.brand-logo-item-nissan{
-    img{
-        width: 200px;
-    }
-}
-.brand-logo-item-jeep{
-    img{
-        width: 200px;
-    }
-}
-
-.brand-logo-item-toyota{
-    img{
-        width: 200px;
-    }
-}
-
-
-
