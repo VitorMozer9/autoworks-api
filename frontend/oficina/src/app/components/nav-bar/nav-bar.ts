@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -6,14 +7,33 @@ import { Component } from '@angular/core';
   templateUrl: './nav-bar.html',
   styleUrl: './nav-bar.scss',
 })
-export class NavBar {
-  // Lista de opções da navbar
+export class NavBar implements OnInit {
   itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS', 'PEÇAS', 'CADASTROS'];
+  itemSelecionado: string = ''; // Inicia vazio para ser preenchido dinamicamente
 
-  // Define qual item começa selecionado por padrão
-  itemSelecionado: string = 'AGENDAMENTOS';
+  constructor(private router: Router) {}
+
+  // Executa assim que o componente é criado na tela
+  ngOnInit() {
+    const urlCorrente = this.router.url;
+
+    if (urlCorrente.includes('home')) {
+      this.itemSelecionado = 'HOME';
+    } else if (urlCorrente.includes('agendamento')) {
+      this.itemSelecionado = 'AGENDAMENTOS';
+    }
+  }
 
   selecionar(item: string) {
     this.itemSelecionado = item;
+
+    switch (item) {
+      case 'HOME':
+        this.router.navigate(['/home']);
+        break;
+      case 'AGENDAMENTOS':
+        this.router.navigate(['/agendamentos']);
+        break;
+    }
   }
 }
