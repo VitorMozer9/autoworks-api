@@ -3,6 +3,7 @@ import { Login } from './pages/login/login';
 import { Home } from './pages/home/home';
 import { Agendamento } from './pages/agendamento/agendamento';
 import { Agendamentos } from './pages/agendamentos/agendamentos';
+import { Servico } from './pages/servico/servico';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,10 @@ export const routes: Routes = [
   {
     path: "agendamentos",
     component: Agendamentos
+  },
+  {
+    path: "servico",
+    component: Servico
   },
   {
     path: "**",
