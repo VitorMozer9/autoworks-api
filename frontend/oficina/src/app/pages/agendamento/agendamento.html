@@ -11,10 +11,12 @@
       <div class="formulario">
         <!-- Select do Topo -->
         <label>Selecione o tipo do serviço:</label>
-        <select [(ngModel)]="dadosForm.servico" name="servico" class="select-field">
-          <option value="">Tipo de serviço desejado</option>
+        <select [(ngModel)]="servicoSelecionado" name="servico" class="select-field">
           <option value="revisao">Revisão Geral</option>
           <option value="troca-oleo">Troca de Óleo</option>
+          <option value="funilaria">Funilaria</option>
+          <option value="retifica-cabecote">Retífica de Cabeçote</option>
+
         </select>
 
           <!-- Bloco Cliente -->

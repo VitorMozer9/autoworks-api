@@ -14,6 +14,7 @@ import { BotaoSecundario } from "../../components/botao-secundario/botao-secunda
 })
 export class Agendamento {
   dadosForm: Partial<AgendamentoOS> = {};
+  servicoSelecionado: string = "revisao";
 
   constructor(private agendamentoService: AgendamentoService, private router: Router) {}
 
