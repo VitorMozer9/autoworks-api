@@ -9,26 +9,23 @@ import { Router } from '@angular/router';
 })
 export class NavBar implements OnInit {
   itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS', 'PEÇAS', 'CADASTROS'];
-  itemSelecionado: string = ''; // Inicia vazio para ser preenchido dinamicamente
+  itemSelecionado: string = '';
 
   constructor(private router: Router) {}
 
-  // Executa assim que o componente é criado na tela
   ngOnInit() {
-    const urlCorrente = this.router.url;
+    const url = this.router.url;
 
-    if (urlCorrente.includes('home')) {
+    if (url.includes('home') || url === '/') {
       this.itemSelecionado = 'HOME';
-    } else if (urlCorrente.includes('agendamento')) {
+    } else if (url.includes('agendamento')) {
       this.itemSelecionado = 'AGENDAMENTOS';
-    } else if (urlCorrente.includes('servico')) {
+    } else if (url.includes('servico')) {
       this.itemSelecionado = 'SERVIÇOS';
     }
   }
 
   selecionar(item: string) {
-    this.itemSelecionado = item;
-
     switch (item) {
       case 'HOME':
         this.router.navigate(['/home']);
@@ -38,7 +35,7 @@ export class NavBar implements OnInit {
         break;
       case 'SERVIÇOS':
         this.router.navigate(['/servico']);
-        break
+        break;
     }
   }
 }

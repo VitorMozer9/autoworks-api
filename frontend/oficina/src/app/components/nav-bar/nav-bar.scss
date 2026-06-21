@@ -1,3 +1,9 @@
+/* Define a animação de crescimento */
+@keyframes expandirBarra {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
 .navbar {
   display: flex;
   flex-direction: column;
@@ -25,35 +31,35 @@
   }
 
   li {
-    position: relative; /* Necessário para posicionar a barrinha em relação ao texto */
+    position: relative;
     color: #ffffff;
     cursor: pointer;
-    padding: 10px 0; /* Cria um espaço confortável acima e abaixo do texto */
+    padding: 10px 0;
     transition: color 0.2s ease;
 
     &:hover {
       color: yellow;
     }
 
-    /* Criando a base da barrinha invisível para todos os itens */
     &::after {
       content: '';
       position: absolute;
-      bottom: -8px; /* Joga a barra um pouco para baixo do texto */
+      bottom: -8px;
       left: 0;
       width: 100%;
-      height: 6px; /* Espessura da sua nova barrinha menor */
+      height: 6px;
       background: #BC0808;
-      transform: scaleX(0); /* Começa com largura zero (invisível) */
-      transition: transform 0.3s ease; /* Efeito de expansão suave */
+      transform: scaleX(0);
+      transform-origin: center; /* Faz a barra crescer a partir do meio */
+      /* Removido o 'transition' daqui */
     }
 
-    /* Quando o Angular injetar a classe .ativo */
     &.ativo {
-      color: #BC0808; /* Opcional: mantém o texto vermelho se quiser, ou pode deixar branco */
+      color: #BC0808;
 
       &::after {
-        transform: scaleX(1); /* Expande a barra vermelha para 100% da largura do texto */
+        /* Dispara a animação toda vez que a classe .ativo for aplicada */
+        animation: expandirBarra 0.3s ease forwards;
       }
     }
   }
