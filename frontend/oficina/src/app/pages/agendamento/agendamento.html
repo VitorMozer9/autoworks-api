@@ -39,9 +39,14 @@
           <input type="text" [(ngModel)]="dadosForm.nomeMecanico" name="nomeMecanico" placeholder="Nome...">
         </div>
 
+        <div class="sessao-formulario">
+          <label>Valor:</label>
+          <input type="text" [(ngModel)]="dadosForm.valor" name="valor" placeholder="0.00">
+        </div>
+
         <!-- Botões de limpar e de envio -->
         <div class="botoes">
-          <app-botao-secundario textoBotao="Limpar" (click)="limpar()"></app-botao-secundario>
+          <app-botao-secundario textoBotao="Cancelar" (click)="cancelar()"></app-botao-secundario>
           <app-botao-secundario textoBotao="Agendar" (click)="agendar()"></app-botao-secundario>
         </div>
       </div>
