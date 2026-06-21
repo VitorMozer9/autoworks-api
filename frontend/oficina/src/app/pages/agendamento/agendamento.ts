@@ -13,8 +13,9 @@ import { BotaoSecundario } from "../../components/botao-secundario/botao-secunda
   styleUrl: './agendamento.scss',
 })
 export class Agendamento {
-  dadosForm: Partial<AgendamentoOS> = {};
-  servicoSelecionado: string = "revisao";
+  dadosForm: Partial<AgendamentoOS> = {
+    servico: "revisao"
+  };
 
   constructor(private agendamentoService: AgendamentoService, private router: Router) {}
 

@@ -29,6 +29,16 @@ export class Agendamentos implements OnInit {
     this.carregarDados();
   }
 
+  formatarServico(valor: string | undefined): string {
+    switch (valor) {
+      case 'revisao': return 'Revisão Geral';
+      case 'troca-oleo': return 'Troca de Óleo';
+      case 'funilaria': return 'Funilaria';
+      case 'retifica-cabecote': return 'Retífica de Cabeçote';
+      default: return valor || ''; // Retorna o texto original se não achar na lista
+    }
+  }
+
   carregarDados() {
     // ATUAL (Teste local)
     this.agendamentos = this.agendamentoService.getTodos();

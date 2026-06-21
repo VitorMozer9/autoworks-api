@@ -9,7 +9,7 @@
       @for (item of agendamentos; track item.id) {
         <div class="agendamento-card">
           <div class="card-header">
-            <p><strong>Serviço:</strong> {{ item.servico === 'revisao' ? 'Revisão Geral' : item.servico === 'troca-oleo' ? 'Troca de Óleo' : item.servico }}</p>
+            <p><strong>Serviço:</strong> {{ formatarServico(item.servico) }}</p>
           </div>
           <div class="card-body">
             <p><strong>Cliente:</strong> {{ item.nomeCliente }}</p>
@@ -38,8 +38,12 @@
             <select [(ngModel)]="itemSelecionado.servico">
               <option value="revisao">Revisão Geral</option>
               <option value="troca-oleo">Troca de Óleo</option>
+              <option value="funilaria">Funilaria</option>
+              <option value="retifica-cabecote">Retífica de Cabeçote</option>
             </select>
-          } @else { <p>{{ itemSelecionado.servico === 'revisao' ? 'Revisão Geral' : itemSelecionado.servico === 'troca-oleo' ? 'Troca de Óleo' : itemSelecionado.servico }}</p> }
+          } @else {
+            <p><strong>Serviço:</strong> {{ formatarServico(itemSelecionado.servico) }}</p>
+          }
 
           <label>Cliente:</label>
           @if (modoEdicao) { <input [(ngModel)]="itemSelecionado.nomeCliente"> }
