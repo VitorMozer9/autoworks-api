@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Login } from './pages/login/login';
 import { Home } from './pages/home/home';
 import { Agendamento } from './pages/agendamento/agendamento';
+import { Agendamentos } from './pages/agendamentos/agendamentos';
 
 export const routes: Routes = [
   {
@@ -18,8 +19,12 @@ export const routes: Routes = [
     component: Home
   },
   {
-    path: "agendamento",
+    path: "novo-agendamento",
     component: Agendamento
+  },
+  {
+    path: "agendamentos",
+    component: Agendamentos
   },
   {
     path: "**",
