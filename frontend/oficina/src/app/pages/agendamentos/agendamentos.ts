@@ -39,6 +39,15 @@ export class Agendamentos implements OnInit {
     }
   }
 
+  formatarStatus(valor: string | undefined): string {
+    switch (valor?.toLowerCase()) {
+      case 'pendente': return 'Pendente';
+      case 'em-andamento': return 'Em andamento';
+      case 'concluido': return 'Concluído';
+      default: return valor || ''; // Retorna o original se não achar
+    }
+  }
+
   carregarDados() {
     // ATUAL (Teste local)
     this.agendamentos = this.agendamentoService.getTodos();

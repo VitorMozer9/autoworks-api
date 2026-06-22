@@ -15,7 +15,7 @@
             <p><strong>Cliente:</strong> {{ item.nomeCliente }}</p>
             <p><strong>Veículo:</strong> {{ item.modelo }}</p>
             <p><strong>Valor:</strong> {{ item.valor | currency: 'BRL' }}</p>
-            <p><strong>Status:</strong> {{ item.status }}</p>
+            <p><strong>Status:</strong> {{ formatarStatus(item.status) }}</p>
 
             <div class="acoes-card">
               <app-botao-terceiro textoBotao="Cancelar" corBotao="#BC0808" (click)="cancelarAgendamento(item.id!)"></app-botao-terceiro>
@@ -80,6 +80,16 @@
           <label>Valor:</label>
           @if (modoEdicao) { <input [(ngModel)]="itemSelecionado.valor"> }
           @else { <p>{{ itemSelecionado.valor }}</p> }
+
+          <label>Status:</label>
+          @if (modoEdicao) {
+            <select [(ngModel)]="itemSelecionado.status">
+              <option value="pendente">Pendente</option>
+              <option value="em-andamento">Em andamento</option>
+              <option value="concluido">Concluído</option>
+            </select>
+          }
+          @else { <p>{{ formatarStatus(itemSelecionado.status) }}</p> }
         </div>
 
         <div class="modal-footer">
