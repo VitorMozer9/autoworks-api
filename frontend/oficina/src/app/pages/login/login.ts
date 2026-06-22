@@ -14,8 +14,16 @@ import { AuthService } from '../../services/auth-service';
   styleUrls: ['./login.scss']
 })
 export class Login {
-  cadastro = { email: '', senha: '' };
-  login = { email: '', senha: '' };
+  cadastro: any = {
+    nome: '',
+    email: '',
+    senha: ''
+  };
+  login: any = {
+    nome: '',
+    email: '',
+    senha: ''
+  };
 
   constructor(private authService: AuthService, private router: Router) {}
 

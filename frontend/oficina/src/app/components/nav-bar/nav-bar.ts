@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth-service'; // Importe o serviço
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,8 +11,13 @@ import { Router } from '@angular/router';
 export class NavBar implements OnInit {
   itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS', 'PEÇAS', 'CADASTROS'];
   itemSelecionado: string = '';
+  menuAberto: boolean = false;
 
-  constructor(private router: Router) {}
+  // Novas variáveis
+  usuario: any = { nome: '', email: '' };
+  iniciais: string = '';
+
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     const url = this.router.url;
@@ -23,19 +29,33 @@ export class NavBar implements OnInit {
     } else if (url.includes('servico')) {
       this.itemSelecionado = 'SERVIÇOS';
     }
+
+    // Carrega os dados do usuário
+    this.usuario = this.authService.getUsuarioAtual();
+    this.iniciais = this.gerarIniciais(this.usuario.nome);
+  }
+
+  gerarIniciais(nome: string): string {
+    if (!nome || nome === 'Visitante') return 'V';
+    const partes = nome.trim().split(' ');
+    if (partes.length === 1) return partes[0].substring(0, 2).toUpperCase();
+    return (partes[0][0] + partes[partes.length - 1][0]).toUpperCase();
   }
 
   selecionar(item: string) {
     switch (item) {
-      case 'HOME':
-        this.router.navigate(['/home']);
-        break;
-      case 'AGENDAMENTOS':
-        this.router.navigate(['/agendamentos']);
-        break;
-      case 'SERVIÇOS':
-        this.router.navigate(['/servico']);
-        break;
+      case 'HOME': this.router.navigate(['/home']); break;
+      case 'AGENDAMENTOS': this.router.navigate(['/agendamentos']); break;
+      case 'SERVIÇOS': this.router.navigate(['/servico']); break;
     }
+  }
+
+  togglePerfil() {
+    this.menuAberto = !this.menuAberto;
+  }
+
+  sair() {
+    this.authService.logout(); // Limpa os dados
+    this.router.navigate(['/login']);
   }
 }
