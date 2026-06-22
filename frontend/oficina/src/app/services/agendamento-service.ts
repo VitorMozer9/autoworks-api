@@ -42,7 +42,7 @@ export class AgendamentoService {
     modelo: 'Fiat Argo 1.0',
     nomeMecanico: 'Carlos',
     valor: 450.00,
-    status: 'Pendente'
+    status: 'pendente'
   },
   {
     id: 2,
@@ -56,7 +56,7 @@ export class AgendamentoService {
     modelo: 'Honda Civic 2.0',
     nomeMecanico: 'Roberto',
     valor: 280.50,
-    status: 'Em Andamento'
+    status: 'em-andamento'
   },
   {
     id: 3,
@@ -70,7 +70,7 @@ export class AgendamentoService {
     modelo: 'Toyota Corolla',
     nomeMecanico: 'Felipe',
     valor: 180.00,
-    status: 'Concluído'
+    status: 'pendente'
   }];
 
   // ==========================================
@@ -88,7 +88,7 @@ export class AgendamentoService {
   // ==========================================
   adicionar(agendamento: AgendamentoOS) {
     agendamento.id = Date.now();
-    agendamento.status = 'Pendente';
+    agendamento.status = 'pendente';
     this.agendamentos.push(agendamento);
 
     // BACKEND:
