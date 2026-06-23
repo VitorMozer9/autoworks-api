@@ -4,6 +4,7 @@ import { Home } from './pages/home/home';
 import { Agendamento } from './pages/agendamento/agendamento';
 import { Agendamentos } from './pages/agendamentos/agendamentos';
 import { Servico } from './pages/servico/servico';
+import { Cadastro } from './pages/cadastro/cadastro';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,10 @@ export const routes: Routes = [
   {
     path: "servico",
     component: Servico
+  },
+  {
+    path: "cadastro",
+    component: Cadastro
   },
   {
     path: "**",
