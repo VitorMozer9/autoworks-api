@@ -19,7 +19,7 @@
 .servico-card {
     min-height: 500px;
     padding: 1.5rem;
-    background-color: #d00000;
+    background-color: #BC0808;
 
     display: flex;
     flex-direction: column;    
@@ -46,8 +46,8 @@
 
     h2 {
         margin: 0;
-        font-family: Impact, 'Arial Black', sans-serif;
-        font-size: clamp(1.5rem, 2vw, 2rem);
+        font-family: 'Arial Black', sans-serif;
+        font-size: clamp(1.6rem, 1vw, 2rem);
         text-transform: uppercase;
         color: #ffffff;
     }
@@ -56,9 +56,11 @@
 // Descrição do serviço prestado
 .servico-description {
     margin: 1rem 0;
+    font-family: 'Alllkin', sans-serif;
     padding-left: 1.2rem;
     font-size: 1rem;
     line-height: 1.3;
+    color: white;
 }
 
 // Preço do serviço prestado
@@ -67,7 +69,7 @@
     margin-bottom: 1.5rem;
     
     text-align: right;
-    font-family: Impact, 'Arial Black', sans-serif;
+    font-family:'Arial Black', sans-serif;
     font-size: 1.8rem;
     color: #ffffff;
 }
@@ -82,7 +84,7 @@
     border-radius: 1rem;
     background-color: #1a1a1a;
 
-    font-family: Impact, 'Arial Black', sans-serif;
+    font-family: 'Arial Black', sans-serif;
     font-size: 1.4rem;
     text-transform: uppercase;
     color: #ffffff;
@@ -99,8 +101,10 @@
 .add-servico {
     min-height: 500px;
     padding: 1.5rem;
+    color: white;
+    font-family: 'Alllkin', sans-serif;
 
-    border: 4px dashed #d00000;
+    border: 4px dashed #BC0808;
     background-color: rgba(208, 0, 0, 0.15);
 
     display: flex;
@@ -125,7 +129,7 @@
 
     border: none;
     border-radius: 50%;
-    background-color: #d00000;
+    background-color: #BC0808;
 
     font-size: 5rem;
     line-height: 1;
