@@ -28,6 +28,8 @@ export class NavBar implements OnInit {
       this.itemSelecionado = 'AGENDAMENTOS';
     } else if (url.includes('servico')) {
       this.itemSelecionado = 'SERVIÇOS';
+    } else if (url.includes('cadastro')) {
+      this.itemSelecionado = 'CADASTROS';
     }
 
     // Carrega os dados do usuário
@@ -47,6 +49,7 @@ export class NavBar implements OnInit {
       case 'HOME': this.router.navigate(['/home']); break;
       case 'AGENDAMENTOS': this.router.navigate(['/agendamentos']); break;
       case 'SERVIÇOS': this.router.navigate(['/servico']); break;
+      case 'CADASTROS': this.router.navigate(['/cadastro']); break;
     }
   }
 
