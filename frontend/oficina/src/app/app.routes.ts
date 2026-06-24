@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { roleGuard } from './guards/role-guard';
+//import { roleGuard } from './guards/role-guard';
 import { Login } from './pages/login/login';
 import { Home } from './pages/home/home';
 import { Agendamento } from './pages/agendamento/agendamento';
@@ -21,32 +21,32 @@ export const routes: Routes = [
   {
     path: "home",
     component: Home,
-    canActivate: [roleGuard]
+    //canActivate: [roleGuard]
   },
   {
     path: "novo-agendamento",
     component: Agendamento,
-    canActivate: [roleGuard]
+    //canActivate: [roleGuard]
   },
   {
     path: "agendamentos",
     component: Agendamentos,
-    canActivate: [roleGuard]
+    //canActivate: [roleGuard]
   },
   {
     path: "servico",
     component: Servico,
-    canActivate: [roleGuard]
+    //canActivate: [roleGuard]
   },
   {
     path: "cadastro",
     component: Cadastro,
-    canActivate: [roleGuard]
+    //canActivate: [roleGuard]
   },
   {
     path: "pecas",
     component: Pecas,
-    canActivate: [roleGuard]
+    //canActivate: [roleGuard]
   },
   {
     path: "**",
