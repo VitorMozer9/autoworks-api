@@ -1,45 +1,49 @@
 <app-base-ui>
-    <app-nav-bar></app-nav-bar>
-    <!-- Página de cadastro de novos funcionários -->
-    <main class="cadastro-page">
-        <form class="funcionario-form">
-            <h1>Adicionar novo Funcionário</h1>
+  <app-nav-bar></app-nav-bar>
+  <main class="cadastro-page">
+      <form class="funcionario-form">
+          <h1>Adicionar novo Funcionário</h1>
 
-            <!-- Inputs de cadastro de novo funcionário com os seus dados de interesse -->
-            <input type="text" name="nome" placeholder="Nome..." >
-            <input type="text" name="telefone" placeholder="Telefone...">
-            <input type="text" name="email" placeholder="Email...">
-            <input type="text" name="cpf" placeholder="CPF..." >
-            <input type="text" name="endereco" placeholder="Endereço...">
+          <label>Informações do Funcionário:</label>
+          <input type="text" [(ngModel)]="dadosForm.nome" name="nome" placeholder="Nome..." >
+          <input type="text" [(ngModel)]="dadosForm.telefone" name="telefone" placeholder="Telefone...">
+          <input type="text" [(ngModel)]="dadosForm.email" name="email" placeholder="Email...">
+          <input type="password" [(ngModel)]="dadosForm.senha" name="senha" placeholder="Senha de Acesso...">
+          <input type="text" [(ngModel)]="dadosForm.cpf" name="cpf" placeholder="CPF..." >
+          <input type="text" [(ngModel)]="dadosForm.endereco" name="endereco" placeholder="Endereço...">
 
-            <h2>Área de atuação</h2>
+          <h2>Área de atuação</h2>
 
-            <!-- Selecão de aréa de atuação do novo funcionário-->
-            <div class="area-options">
-                <label class="area-option">
-                    <input type="radio" name="areaAtuacao" value="MECANICO_ESECIALISTA">
-                    <span></span>
-                    <p>Mecânico Especialista</p>
-                </label>
+          <div class="area-options">
+              <label class="area-option">
+                  <input type="radio" [(ngModel)]="dadosForm.areaAtuacao" name="areaAtuacao" value="ADMINISTRADOR">
+                  <span></span>
+                  <p>Administrador</p>
+              </label>
 
-                <label class="area-option">
-                    <input type="radio" name="areaAtuacao" value="VENDEDOR">
-                    <span></span>
-                    <p>Vendedor</p>
-                </label>
+              <label class="area-option">
+                  <input type="radio" [(ngModel)]="dadosForm.areaAtuacao" name="areaAtuacao" value="VENDEDOR">
+                  <span></span>
+                  <p>Vendedor</p>
+              </label>
 
-                <label class="area-option">
-                    <input type="radio" name="areaAtuacao" value="MECANICO_ESPECIFICO">
-                    <span></span>
-                    <p>Mecânico Específico</p>
-                </label>
-            </div>
+              <label class="area-option">
+                  <input type="radio" [(ngModel)]="dadosForm.areaAtuacao" name="areaAtuacao" value="MECANICO_ESPECIALISTA">
+                  <span></span>
+                  <p>Mecânico Especialista</p>
+              </label>
 
-            <!-- Botões para adicionar ou cancelar a criação de um novo funcionário -->
-            <div class="acao-form">
-                <app-botao-secundario textoBotao="Cancelar"></app-botao-secundario>
-                <app-botao-secundario textoBotao="Adicionar"></app-botao-secundario>
-            </div>
-        </form>
-    </main>
+              <label class="area-option">
+                  <input type="radio" [(ngModel)]="dadosForm.areaAtuacao" name="areaAtuacao" value="MECANICO_ESPECIFICO">
+                  <span></span>
+                  <p>Mecânico Específico</p>
+              </label>
+          </div>
+
+          <div class="acao-form">
+              <app-botao-secundario textoBotao="Cancelar" (click)="cancelar()"></app-botao-secundario>
+              <app-botao-secundario textoBotao="Adicionar" (click)="cadastrar()"></app-botao-secundario>
+          </div>
+      </form>
+  </main>
 </app-base-ui>

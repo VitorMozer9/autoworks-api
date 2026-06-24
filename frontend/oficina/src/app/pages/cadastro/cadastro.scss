@@ -1,122 +1,132 @@
-// Página de Cadastro de novos funcinoários
 .cadastro-page {
-    min-height: 100vh;
-    padding: 4rem 2rem;
-    display: flex;
-    justify-content: center;
+  height: calc(100vh - 66px - 4rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-// Barras para preenchimento do formulário 
 .funcionario-form {
+  width: 100%;
+  max-width: 416px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  h1 {
+    margin: 0 0 20px 0;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  h2 {
+    margin: 20px;
+    margin-top: 30px;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  label {
+    color: #ffffff;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+
+  input[type='text'],
+  input[type='email'],
+  input[type='password'] {
     width: 100%;
-    max-width: 760px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    h1 {
-        margin: 0 0 2rem;
-        font-family:'Arial Black', sans-serif;
-        font-size: 25px;
-        text-transform: uppercase;
-        color: white;
-    }
-
-    h2 {
-        margin: 2rem 0 1.5rem;
-
-        font-family: 'Arial Black', sans-serif;
-        font-size: 25px;
-        text-transform: uppercase;
-        color: white;
-    }
-}
-
-// Barras para preenchimento de dados do novo funcionário
-.funcionario-form input[type='text'],
-.funcionario-form input[type='email'] {
-    width: 100%;
-    max-width: 430px;
-    height: 54px;
-
-    margin-bottom: 1rem;
-    padding: 0 1rem;
-    padding-left: 15px;
-
+    height: 42px;
+    background-color: #ffffff;
     border: none;
     border-radius: 5px;
+    padding-left: 15px;
+    font-size: 16px;
+    color: #333333;
     outline: none;
-    background-color: #dddddd;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 
-    font-size: 1.3rem;
-    color: #222222;
-}
+    &::placeholder {
+      color: #8C8C8C;
+    }
+  }
 
-.funcionario-form input::placeholder {
-    color: #777777;
-}
-// Estilo da area de opções de funcionários disponiveis para o cadastro (Vendedor, Mecãnico Especialista, Mecânico Especifico)
-.area-options {
+  .area-options {
     display: flex;
-    justify-content: center;
-    gap: 5rem;
-    margin-bottom: 5rem;
-}
+    justify-content: space-between;
+    margin: 15px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    gap: 10px;
+  }
 
-.area-option {
+  .area-option {
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
+    flex: 1;
 
     input {
-        display: none;
+      display: none;
     }
 
     span {
-        width: 42px;
-        height: 42px;
-        border: 5px solid white;
+      width: 26px;
+      height: 26px;
+      border: 3px solid #ffffff;
+      border-radius: 50%;
+      position: relative;
+      margin-bottom: 8px;
+      transition: border-color 0.3s ease;
+
+      &::after {
+        content: '';
+        width: 12px;
+        height: 12px;
+        background-color: #BC0808;
         border-radius: 50%;
-        position: relative;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+      }
     }
 
     p {
-        margin-top: 1rem;
-        font-size: 1rem;
-        color: white;
-        text-align: center;
-        font-family: 'Alllkin', sans-serif;
+      margin: 0;
+      font-size: 11px;
+      color: #ffffff;
+      text-align: center;
+      font-family: 'Arial Black', sans-serif;
+      text-transform: uppercase;
     }
-}
 
-// Estilo de quando o campo de ocupação do novo funcionário é preenchido 
-.area-option input:checked + span::after {
-    content: '';
-    width: 20px;
-    height: 20px;
+    input:checked + span {
+      border-color: #BC0808;
+    }
 
-    background-color: white;
-    border-radius: 50%;
+    input:checked + span::after {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-// Estilo dos botões de cancelamento ou confirmação de adição de um novo funcionário 
-.acao-form {
+  .acao-form {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    gap: 4rem;
+    justify-content: center;
+    gap: 12px;
+  }
 }
-
-
-
-
-
-
-
