@@ -1,4 +1,4 @@
-package com.github.vitormozer9.autoworks_api.exceptions.backend.src.main.java.com.github.vitormozer9.oficina_management.exceptions;
+package com.github.vitormozer9.autoworks_api.exceptions;
 
 public class BusinessException extends RuntimeException {
 
