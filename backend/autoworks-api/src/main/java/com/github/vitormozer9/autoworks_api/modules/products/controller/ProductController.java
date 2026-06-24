@@ -1,3 +1,5 @@
+package com.github.vitormozer9.autoworks_api.modules.products.controller;
+
 import com.github.vitormozer9.autoworks_api.modules.products.dtos.CreateProductRequestDTO;
 import com.github.vitormozer9.autoworks_api.modules.products.dtos.ProductResponseDTO;
 import com.github.vitormozer9.autoworks_api.modules.products.dtos.UpdateProductQuantityRequestDTO;

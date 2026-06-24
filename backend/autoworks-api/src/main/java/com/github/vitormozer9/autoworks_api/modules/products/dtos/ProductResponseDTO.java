@@ -1,7 +1,5 @@
 package com.github.vitormozer9.autoworks_api.modules.products.dtos;
 
-package com.github.vitormozer9.autoworks_api.modules.products.dtos;
-
 import com.github.vitormozer9.autoworks_api.modules.products.entities.ProductCategory;
 
 import java.math.BigDecimal;
