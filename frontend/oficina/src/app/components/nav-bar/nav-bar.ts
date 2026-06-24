@@ -9,12 +9,10 @@ import { AuthService } from '../../services/auth-service'; // Importe o serviço
   styleUrl: './nav-bar.scss',
 })
 export class NavBar implements OnInit {
-  itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS', 'PEÇAS', 'CADASTROS'];
+  itens: string[] = []; // Inicia vazio
   itemSelecionado: string = '';
   menuAberto: boolean = false;
-
-  // Novas variáveis
-  usuario: any = { nome: '', email: '' };
+  usuario: any = { nome: '', email: '', areaAtuacao: '' };
   iniciais: string = '';
 
   constructor(private router: Router, private authService: AuthService) {}
@@ -22,19 +20,29 @@ export class NavBar implements OnInit {
   ngOnInit() {
     const url = this.router.url;
 
-    if (url.includes('home') || url === '/') {
-      this.itemSelecionado = 'HOME';
-    } else if (url.includes('agendamento')) {
-      this.itemSelecionado = 'AGENDAMENTOS';
-    } else if (url.includes('servico')) {
-      this.itemSelecionado = 'SERVIÇOS';
-    } else if (url.includes('cadastro')) {
-      this.itemSelecionado = 'CADASTROS';
-    }
+    if (url.includes('home') || url === '/') this.itemSelecionado = 'HOME';
+    else if (url.includes('agendamento')) this.itemSelecionado = 'AGENDAMENTOS';
+    else if (url.includes('servico')) this.itemSelecionado = 'SERVIÇOS';
+    else if (url.includes('cadastro')) this.itemSelecionado = 'CADASTROS';
+    else if (url.includes('pecas')) this.itemSelecionado = 'PEÇAS';
 
-    // Carrega os dados do usuário
     this.usuario = this.authService.getUsuarioAtual();
     this.iniciais = this.gerarIniciais(this.usuario.nome);
+
+    // Chama a função que constrói o menu
+    this.definirMenu(this.usuario.areaAtuacao);
+  }
+
+  definirMenu(cargo: string) {
+    if (cargo === 'ADMINISTRADOR') {
+      this.itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS', 'PEÇAS', 'CADASTROS'];
+    } else if (cargo === 'VENDEDOR') {
+      this.itens = ['HOME', 'PEÇAS'];
+    } else if (cargo === 'MECANICO_ESPECIALISTA' || cargo === 'MECANICO_ESPECIFICO') {
+      this.itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS'];
+    } else {
+      this.itens = ['HOME']; // Fallback de segurança
+    }
   }
 
   gerarIniciais(nome: string): string {
@@ -50,6 +58,7 @@ export class NavBar implements OnInit {
       case 'AGENDAMENTOS': this.router.navigate(['/agendamentos']); break;
       case 'SERVIÇOS': this.router.navigate(['/servico']); break;
       case 'CADASTROS': this.router.navigate(['/cadastro']); break;
+      case 'PEÇAS': this.router.navigate(['/pecas']); break;
     }
   }
 

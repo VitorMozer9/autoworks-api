@@ -11,6 +11,9 @@
   background: #1a1b23;
   border: 1px solid #BC0808;
 
+  position: relative;
+  z-index: 9999;
+
   .nav-wrapper {
     display: flex;
     justify-content: space-between; /* Empurra a lista para a esquerda e perfil para a direita */
