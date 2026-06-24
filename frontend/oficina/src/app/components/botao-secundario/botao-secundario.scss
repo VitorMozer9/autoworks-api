@@ -1,7 +1,7 @@
 .botao-secundario {
   width: 202px;
   height: 48px;
-  border-radius: 12px;
+  border-radius: 8px;
   background: #BC0808;
   color: #FFF;
   text-align: center;
@@ -10,4 +10,19 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  cursor: pointer;
+  border: 1px solid #000;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #8E0505;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  }
+
+  &:active {
+    background-color: #BC0808;
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
 }
