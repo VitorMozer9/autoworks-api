@@ -1,0 +1,10 @@
+CREATE TABLE services (
+    id BIGSERIAL PRIMARY KEY,
+    codigo VARCHAR(80) NOT NULL UNIQUE,
+    nome VARCHAR(160) NOT NULL,
+    descricao VARCHAR(500),
+    valor_base NUMERIC(12, 2) NOT NULL,
+    ativo BOOLEAN NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL
+);
