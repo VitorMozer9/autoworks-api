@@ -5,6 +5,7 @@ import { Agendamento } from './pages/agendamento/agendamento';
 import { Agendamentos } from './pages/agendamentos/agendamentos';
 import { Servico } from './pages/servico/servico';
 import { Cadastro } from './pages/cadastro/cadastro';
+import { Pecas } from './pages/pecas/pecas';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,10 @@ export const routes: Routes = [
   {
     path: "cadastro",
     component: Cadastro
+  },
+  {
+    path: "pecas",
+    component: Pecas
   },
   {
     path: "**",
