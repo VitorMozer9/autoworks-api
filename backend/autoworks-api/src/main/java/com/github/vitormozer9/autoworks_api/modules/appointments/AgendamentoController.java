@@ -1,6 +1,6 @@
-package com.github.vitormozer9.autoworks_api.modules.appoinments;
+package com.github.vitormozer9.autoworks_api.modules.appointments;
 
-mport com.github.vitormozer9.autoworks_api.modules.appointments.dtos.AgendamentoResponseDTO;
+import com.github.vitormozer9.autoworks_api.modules.appointments.dtos.AgendamentoResponseDTO;
 import com.github.vitormozer9.autoworks_api.modules.appointments.dtos.CreateAgendamentoRequestDTO;
 import com.github.vitormozer9.autoworks_api.modules.appointments.dtos.UpdateAgendamentoRequestDTO;
 import com.github.vitormozer9.autoworks_api.modules.appointments.useCases.CreateAgendamentoUseCase;

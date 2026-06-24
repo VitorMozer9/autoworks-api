@@ -1,4 +1,4 @@
-package com.github.vitormozer9.autoworks_api.modules.appoinments.dtos;
+package com.github.vitormozer9.autoworks_api.modules.appointments.dtos;
 
 import java.math.BigDecimal;
 
