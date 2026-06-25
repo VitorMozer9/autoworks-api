@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth-service'; // Importe o serviço
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth-service'; // Importe o serviço
   styleUrl: './nav-bar.scss',
 })
 export class NavBar implements OnInit {
-  itens: string[] = []; // Inicia vazio
+  itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS', 'PEÇAS', 'CADASTROS'];
   itemSelecionado: string = '';
   menuAberto: boolean = false;
   usuario: any = { nome: '', email: '', areaAtuacao: '' };
@@ -28,21 +28,6 @@ export class NavBar implements OnInit {
 
     this.usuario = this.authService.getUsuarioAtual();
     this.iniciais = this.gerarIniciais(this.usuario.nome);
-
-    // Chama a função que constrói o menu
-    this.definirMenu(this.usuario.areaAtuacao);
-  }
-
-  definirMenu(cargo: string) {
-    if (cargo === 'ADMINISTRADOR') {
-      this.itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS', 'PEÇAS', 'CADASTROS'];
-    } else if (cargo === 'VENDEDOR') {
-      this.itens = ['HOME', 'PEÇAS'];
-    } else if (cargo === 'MECANICO_ESPECIALISTA' || cargo === 'MECANICO_ESPECIFICO') {
-      this.itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS'];
-    } else {
-      this.itens = ['HOME']; // Fallback de segurança
-    }
   }
 
   gerarIniciais(nome: string): string {
@@ -67,7 +52,7 @@ export class NavBar implements OnInit {
   }
 
   sair() {
-    this.authService.logout(); // Limpa os dados
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 }
