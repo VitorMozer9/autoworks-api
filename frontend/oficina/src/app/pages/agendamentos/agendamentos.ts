@@ -48,6 +48,8 @@ export class Agendamentos implements OnInit {
   }
 
   carregarDados() {
+
+
     this.agendamentoService.getTodos().subscribe({
       next: (dadosDaApi) => {
         this.agendamentos = dadosDaApi;
@@ -89,13 +91,15 @@ export class Agendamentos implements OnInit {
         error: (erro) => {
           console.error('Erro ao editar:', erro);
           alert('Erro ao editar agendamento.');
-        }
       });
+
     }
   }
 
   cancelarAgendamento(id: number) {
     if (confirm('Deseja cancelar?')) {
+
+
       this.agendamentoService.remover(id).subscribe({
         next: () => {
           this.carregarDados();
@@ -105,6 +109,7 @@ export class Agendamentos implements OnInit {
           alert('Erro ao excluir agendamento.');
         }
       });
+
     }
   }
 

@@ -13,10 +13,11 @@ import { ServicoOficina, ServicoService } from '../../services/servico-service';
   templateUrl: './servico.html',
   styleUrl: './servico.scss',
 })
+
 export class Servico implements OnInit {
   servicos: ServicoOficina[] = [];
 
-  constructor(private router: Router, private servicoService: ServicoService) {}
+  constructor(private router: Router, private servicoService: ServicoService) { }
 
   ngOnInit() {
     this.carregarServicos();

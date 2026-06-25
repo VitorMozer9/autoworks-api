@@ -24,18 +24,24 @@ export interface AgendamentoOS {
 export class AgendamentoService {
   private apiUrl = `${environment.apiUrl}/agendamentos`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getTodos(): Observable<AgendamentoOS[]> {
     return this.http.get<AgendamentoOS[]>(this.apiUrl);
   }
 
   adicionar(agendamento: AgendamentoOS): Observable<AgendamentoOS> {
-    return this.http.post<AgendamentoOS>(this.apiUrl, this.normalizarAgendamentoParaApi(agendamento));
+    return this.http.post<AgendamentoOS>(
+      this.apiUrl,
+      this.normalizarAgendamentoParaApi(agendamento)
+    );
   }
 
   atualizar(id: number, dadosAtualizados: AgendamentoOS): Observable<AgendamentoOS> {
-    return this.http.put<AgendamentoOS>(`${this.apiUrl}/${id}`, this.normalizarAgendamentoParaApi(dadosAtualizados));
+    return this.http.put<AgendamentoOS>(
+      `${this.apiUrl}/${id}`,
+      this.normalizarAgendamentoParaApi(dadosAtualizados)
+    );
   }
 
   remover(id: number): Observable<void> {
@@ -49,5 +55,6 @@ export class AgendamentoService {
       ...dados,
       valor: Number(dados.valor)
     };
+
   }
 }

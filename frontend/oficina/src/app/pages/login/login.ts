@@ -28,6 +28,8 @@ export class Login {
   constructor(private authService: AuthService, private router: Router) {}
 
   cadastrarUsuario() {
+
+
     this.authService.cadastrar({ email: this.cadastro.email, senha: this.cadastro.senha }).subscribe({
       next: () => {
         alert('Usuário cadastrado com sucesso!');
@@ -39,6 +41,7 @@ export class Login {
         alert('Erro ao cadastrar usuário. Verifique os dados informados.');
       }
     });
+
   }
 
   logarUsuario() {
@@ -49,5 +52,6 @@ export class Login {
         alert('Email ou senha inválidos.');
       }
     });
+
   }
 }

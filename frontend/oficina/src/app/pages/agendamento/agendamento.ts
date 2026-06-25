@@ -34,6 +34,7 @@ export class Agendamento {
         alert('Ocorreu um erro ao salvar o agendamento.');
       }
     });
+
   }
 
   cancelar() {

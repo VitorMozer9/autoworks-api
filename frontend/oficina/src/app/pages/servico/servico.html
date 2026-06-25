@@ -1,41 +1,47 @@
 <app-base-ui>
     <app-nav-bar></app-nav-bar>
-    <main>
-        <div class="servico-container">
-            @for (servico of servicos; track servico.id) {
-                <article class="servico-card">
-                    <img class="servico-img" src="servico_img/oleo.png" alt="Imagem do serviço">
 
-                    <div class="servico-info">
-                        <div class="servico-titulo">
-                            <h2>{{ servico.nome }}</h2>
-                        </div>
+<main>
+    <div class="servico-container">
+        @for (servico of servicos; track servico.id) {
+            <article class="servico-card">
+                <img class="servico-img" src="servico_img/oleo.png" alt="Imagem do serviço">
 
-                        <ul class="servico-description">
-                            <li>{{ servico.descricao || 'Serviço disponível para agendamento.' }}</li>
-                        </ul>
-
-                        <p class="servico-price">{{ formatarMoeda(servico.valorBase) }}</p>
-
-                        <app-botao-primario textoBotao="Agendar" (click)="agendar()"></app-botao-primario>
+                <div class="servico-info">
+                    <div class="servico-titulo">
+                        <h2>{{ servico.nome }}</h2>
                     </div>
-                </article>
-            } @empty {
-                <article class="servico-card">
-                    <div class="servico-info">
-                        <div class="servico-titulo">
-                            <h2>Nenhum serviço encontrado</h2>
-                        </div>
-                        <ul class="servico-description">
-                            <li>Cadastre serviços no backend para exibi-los nesta tela.</li>
-                        </ul>
-                    </div>
-                </article>
-            }
 
-            <article class="add-servico">
-                <app-botao-secundario textoBotao="+ Adicionar"></app-botao-secundario>
+                    <ul class="servico-description">
+                        <li>{{ servico.descricao || 'Serviço disponível para agendamento.' }}</li>
+                    </ul>
+
+                    <p class="servico-price">{{ formatarMoeda(servico.valorBase) }}</p>
+
+                    <app-botao-primario
+                        textoBotao="Agendar"
+                        (click)="agendar()">
+                    </app-botao-primario>
+                </div>
             </article>
-        </div>
-    </main>
+        } @empty {
+            <article class="servico-card">
+                <div class="servico-info">
+                    <div class="servico-titulo">
+                        <h2>Nenhum serviço encontrado</h2>
+                    </div>
+
+                    <ul class="servico-description">
+                        <li>Cadastre serviços no backend para exibi-los nesta tela.</li>
+                    </ul>
+                </div>
+            </article>
+        }
+
+        <article class="add-servico">
+            <app-botao-secundario textoBotao="+ Adicionar"></app-botao-secundario>
+        </article>
+    </div>
+</main>
+
 </app-base-ui>
