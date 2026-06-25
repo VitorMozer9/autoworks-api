@@ -85,7 +85,7 @@ export class Agendamentos implements OnInit {
 
       this.agendamentoService.atualizar(this.itemSelecionado.id, this.itemSelecionado as AgendamentoOS).subscribe({
         next: () => {
-          this.carregarDados(); // Recarrega a lista do banco
+          this.carregarDados();
           this.fecharModal();
         },
         error: (erro) => {
