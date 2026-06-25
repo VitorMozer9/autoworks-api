@@ -59,6 +59,7 @@ export class Agendamento {
 
   cancelar() {
     this.dadosForm = { servico: 'revisao' };
+    this.router.navigate(['/agendamentos']);
   }
 
   private validarAgendamento(): string | null {
