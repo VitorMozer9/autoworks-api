@@ -24,13 +24,6 @@ export class Agendamento {
       this.dadosForm.valor = parseFloat(this.dadosForm.valor.replace(',', '.'));
     }
 
-    // ATUAL (Teste local)
-    this.agendamentoService.adicionar(this.dadosForm as AgendamentoOS);
-    console.log('Agendamento salvo:', this.dadosForm);
-    this.router.navigate(['/agendamentos']);
-
-    // BACKEND:
-    /*
     this.agendamentoService.adicionar(this.dadosForm as AgendamentoOS).subscribe({
       next: (respostaDaApi) => {
         console.log('Salvo no banco com sucesso:', respostaDaApi);
@@ -41,7 +34,7 @@ export class Agendamento {
         alert('Ocorreu um erro ao salvar o agendamento.');
       }
     });
-    */
+
   }
 
   cancelar() {

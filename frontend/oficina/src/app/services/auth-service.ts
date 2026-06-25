@@ -1,89 +1,79 @@
 import { Injectable } from '@angular/core';
-// TODO: DESCOMENTAR importações abaixo quando for conectar com o backend
-// import { HttpClient } from '@angular/common/http';
-// import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
-/* FORMATOS ESPERADOS PELO BACKEND (JSON):
-  Login (POST): { "email": "string", "senha": "string" }
-  Retorno Login: { "token": "string", "usuario": { "nome": "string", "email": "string", "areaAtuacao": "string" } }
+export interface AuthCredentials {
+  email: string;
+  senha: string;
+}
 
-  Cadastro (POST): { "nome": "string", "email": "string", "senha": "string", "areaAtuacao": "string", "telefone": "string", "cpf": "string", "endereco": "string" }
-*/
+export interface CadastroRequest {
+  nome: string;
+  email: string;
+  senha: string;
+  areaAtuacao: string;
+  telefone: string;
+  cpf: string;
+  endereco: string;
+}
+
+export interface UsuarioLogado {
+  nome: string;
+  email: string;
+  areaAtuacao: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  usuario?: UsuarioLogado;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // TODO: DESCOMENTAR URL E CONSTRUTOR NA INTEGRAÇÃO
-  // private apiUrl = 'http://localhost:8080/api/auth';
-  // constructor(private http: HttpClient) {}
+  private apiUrl = `${environment.apiUrl}/auth`;
 
-  // ==========================================
-  // TODO: REMOVER ARRAY QUANDO O BACKEND ESTIVER CONECTADO
-  private usuariosMock: any[] = [
-    {
-      nome: 'admin',
-      email: 'admin@oficina.com',
-      senha: 'admin',
-      areaAtuacao: 'ADMINISTRADOR'
-    }
-  ];
-  // ==========================================
+  constructor(private http: HttpClient) { }
 
-  cadastrar(dados: any) {
-    // TODO: REMOVER bloco abaixo (Teste Local)
-    this.usuariosMock.push(dados);
-    console.log('Simulando envio de cadastro...', dados);
-
-    // TODO: DESCOMENTAR chamada real
-    // return this.http.post(`${this.apiUrl}/cadastro`, dados);
+  cadastrar(dados: CadastroRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/cadastro`, dados).pipe(
+      tap((resposta) => this.salvarSessao(dados.email, resposta.token, resposta.usuario))
+    );
   }
 
-  login(dados: any): boolean {
-    // TODO: REMOVER todo este bloco abaixo (Teste Local)
-    const usuarioEncontrado = this.usuariosMock.find(u => u.email === dados.email && u.senha === dados.senha);
-
-    if (usuarioEncontrado) {
-      const dadosParaSalvar = {
-        nome: usuarioEncontrado.nome,
-        email: usuarioEncontrado.email,
-        areaAtuacao: usuarioEncontrado.areaAtuacao
-      };
-
-      localStorage.setItem('usuarioLogado', JSON.stringify(dadosParaSalvar));
-      return true; // Login autorizado
-    }
-
-    alert('Acesso Negado: Usuário não cadastrado ou senha incorreta.');
-    return false; // Login bloqueado
-
-    // TODO: DESCOMENTAR E ADAPTAR PARA A CHAMADA REAL
-    /*
-    return this.http.post(`${this.apiUrl}/login`, dados).subscribe({
-      next: (resposta: any) => {
-        // O backend deve retornar um objeto contendo o Token e os dados do usuário
-        localStorage.setItem('usuarioLogado', JSON.stringify(resposta.usuario));
-        localStorage.setItem('token', resposta.token); // Salva o JWT para ser usado nas rotas protegidas
-        // ... Lógica de redirecionamento para a Home
-      },
-      error: () => {
-        alert('Acesso Negado: Credenciais inválidas.');
-      }
-    });
-    */
+  login(dados: AuthCredentials): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, dados).pipe(
+      tap((resposta) => this.salvarSessao(dados.email, resposta.token, resposta.usuario))
+    );
   }
 
-  // ==========================================
-  // Métodos utilitários que NÃO precisam ser removidos na integração
-  // ==========================================
-  getUsuarioAtual() {
+  getUsuarioAtual(): UsuarioLogado {
     const dados = localStorage.getItem('usuarioLogado');
-    return dados ? JSON.parse(dados) : { nome: 'Visitante', email: '', areaAtuacao: '' };
+
+  
+return dados
+  ? JSON.parse(dados)
+  : { nome: 'Visitante', email: '', areaAtuacao: '' };
+
+
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('usuarioLogado');
-    // TODO: DESCOMENTAR linha abaixo quando o sistema de JWT for implementado
-    // localStorage.removeItem('token');
+    localStorage.removeItem('token');
+  }
+
+  private salvarSessao(email: string, token: string, usuario?: UsuarioLogado): void {
+    const usuarioParaSalvar = usuario ?? {
+      nome: email,
+      email,
+      areaAtuacao: ''
+    };
+
+    localStorage.setItem('usuarioLogado', JSON.stringify(usuarioParaSalvar));
+    localStorage.setItem('token', token);
+
   }
 }

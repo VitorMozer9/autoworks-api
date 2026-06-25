@@ -34,13 +34,25 @@ export class Pecas implements OnInit {
   }
 
   carregarDados() {
-    this.pecasTotais = this.pecasService.getTodos();
-    this.aplicarFiltros();
+    this.pecasService.getTodos({
+      nome: this.filtroNome,
+      codigo: this.filtroCodigo,
+      categoria: this.categoriaAtiva
+    }).subscribe({
+      next: (pecas) => {
+        this.pecasTotais = pecas;
+        this.pecasFiltradas = pecas;
+      },
+      error: (erro) => {
+        console.error('Erro ao buscar peças:', erro);
+        alert('Erro ao buscar peças.');
+      }
+    });
   }
 
   selecionarCategoria(categoria: string) {
     this.categoriaAtiva = this.categoriaAtiva === categoria ? '' : categoria;
-    this.aplicarFiltros();
+    this.carregarDados();
   }
 
   aplicarFiltros() {
@@ -54,7 +66,7 @@ export class Pecas implements OnInit {
   }
 
   buscar() {
-    this.aplicarFiltros();
+    this.carregarDados();
   }
 
   selecionarLinha(id: number | undefined) {
@@ -110,15 +122,21 @@ export class Pecas implements OnInit {
       this.pecaForm.quantidade = parseInt(this.pecaForm.quantidade, 10);
     }
 
-    if (this.modoEdicao && this.pecaForm.id) {
-      this.pecasService.atualizar(this.pecaForm.id, this.pecaForm as Peca);
-    } else {
-      this.pecasService.adicionar(this.pecaForm as Peca);
-    }
+    const requisicao = this.modoEdicao && this.pecaForm.id
+      ? this.pecasService.atualizar(this.pecaForm.id, this.pecaForm as Peca)
+      : this.pecasService.adicionar(this.pecaForm as Peca);
 
-    this.fecharModal();
-    this.pecaSelecionadaId = null;
-    this.carregarDados();
+    requisicao.subscribe({
+      next: () => {
+        this.fecharModal();
+        this.pecaSelecionadaId = null;
+        this.carregarDados();
+      },
+      error: (erro) => {
+        console.error('Erro ao salvar peça:', erro);
+        alert('Erro ao salvar peça. Verifique os dados informados.');
+      }
+    });
   }
 
   remover() {
@@ -127,9 +145,16 @@ export class Pecas implements OnInit {
       return;
     }
     if (confirm('Tem certeza que deseja remover esta peça?')) {
-      this.pecasService.remover(this.pecaSelecionadaId);
-      this.pecaSelecionadaId = null;
-      this.carregarDados();
+      this.pecasService.remover(this.pecaSelecionadaId).subscribe({
+        next: () => {
+          this.pecaSelecionadaId = null;
+          this.carregarDados();
+        },
+        error: (erro) => {
+          console.error('Erro ao remover peça:', erro);
+          alert('Erro ao remover peça.');
+        }
+      });
     }
   }
 
