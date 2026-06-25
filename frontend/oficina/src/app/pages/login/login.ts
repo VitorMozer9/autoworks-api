@@ -14,12 +14,12 @@ import { AuthService } from '../../services/auth-service';
   styleUrls: ['./login.scss']
 })
 export class Login {
-  cadastro: any = {
+  cadastro = {
     nome: '',
     email: '',
     senha: ''
   };
-  login: any = {
+  login = {
     nome: '',
     email: '',
     senha: ''
@@ -28,42 +28,26 @@ export class Login {
   constructor(private authService: AuthService, private router: Router) {}
 
   cadastrarUsuario() {
-    // ATUAL (Teste local)
-    this.authService.cadastrar(this.cadastro);
-    alert('Cadastro simulado com sucesso!');
-    this.cadastro = { email: '', senha: '' };
-
-    // BACKEND:
-    /*
-    this.authService.cadastrar(this.cadastro).subscribe({
+    this.authService.cadastrar({ email: this.cadastro.email, senha: this.cadastro.senha }).subscribe({
       next: () => {
-        alert('Usuário cadastrado com sucesso! Faça o login.');
-        this.cadastro = { email: '', senha: '' }; // Limpa o formulário
+        alert('Usuário cadastrado com sucesso!');
+        this.cadastro = { nome: '', email: '', senha: '' };
+        this.router.navigate(['/home']);
       },
-      error: (erro) => console.error('Erro ao cadastrar:', erro)
+      error: (erro) => {
+        console.error('Erro ao cadastrar:', erro);
+        alert('Erro ao cadastrar usuário. Verifique os dados informados.');
+      }
     });
-    */
   }
 
   logarUsuario() {
-    // ATUAL (Teste local)
-    this.authService.login(this.login);
-    this.router.navigate(['/home']);
-
-    // BACKEND:
-    /*
-    this.authService.login(this.login).subscribe({
-      next: (resposta: any) => {
-        // Se a API retornar um token (ex: JWT), você pode salvar aqui
-        // localStorage.setItem('token', resposta.token);
-
-        this.router.navigate(['/home']); // Redireciona para a Home
-      },
+    this.authService.login({ email: this.login.email, senha: this.login.senha }).subscribe({
+      next: () => this.router.navigate(['/home']),
       error: (erro) => {
         console.error('Erro no login:', erro);
         alert('Email ou senha inválidos.');
       }
     });
-    */
   }
 }

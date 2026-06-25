@@ -25,14 +25,21 @@ export class Cadastro {
   constructor(private authService: AuthService) {}
 
   cadastrar() {
-    if (!this.dadosForm.nome || !this.dadosForm.email || !this.dadosForm.senha) {
-      alert('Nome, Email e Senha são obrigatórios para o cadastro.');
+    if (!this.dadosForm.email || !this.dadosForm.senha) {
+      alert('Email e Senha são obrigatórios para o cadastro.');
       return;
     }
 
-    this.authService.cadastrar({ ...this.dadosForm });
-    alert('Funcionário cadastrado com sucesso!');
-    this.cancelar();
+    this.authService.cadastrar({ ...this.dadosForm }).subscribe({
+      next: () => {
+        alert('Funcionário cadastrado com sucesso!');
+        this.cancelar();
+      },
+      error: (erro) => {
+        console.error('Erro ao cadastrar funcionário:', erro);
+        alert('Erro ao cadastrar funcionário. Verifique os dados informados.');
+      }
+    });
   }
 
   cancelar() {
