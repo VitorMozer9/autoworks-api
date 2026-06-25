@@ -1,0 +1,201 @@
+/* Define a animação de crescimento */
+@keyframes expandirBarra {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #1a1b23;
+  border: 1px solid #BC0808;
+
+  position: relative;
+  z-index: 9999;
+
+  .nav-wrapper {
+    display: flex;
+    justify-content: space-between; /* Empurra a lista para a esquerda e perfil para a direita */
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0 20px;
+    height: 64px;
+    list-style: none;
+    font-family: Impact, 'Arial Black', sans-serif;
+    color: #ffffff;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    box-sizing: border-box;
+  }
+
+  li {
+    position: relative;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 10px 0;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: yellow;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: #BC0808;
+      transform: scaleX(0);
+      transform-origin: center; /* Faz a barra crescer a partir do meio */
+    }
+
+    &.ativo {
+      color: #BC0808;
+
+      &::after {
+        /* Dispara a animação toda vez que a classe .ativo for aplicada */
+        animation: expandirBarra 0.3s ease forwards;
+      }
+    }
+  }
+
+  /* Estilos do Dropdown de Perfil */
+  .perfil-menu {
+    position: relative;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Separa o texto do círculo */
+    height: 64px;
+
+    .avatar-circulo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #333; /* Fundo escuro pro círculo */
+      border: 2px solid #BC0808; /* Borda vermelha do tema */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      font-weight: bold;
+      font-family: 'Arial Black', sans-serif;
+      margin-left: 50px;
+    }
+
+    /* Estilos do Novo Card de Perfil (estilo Google) */
+    .dropdown-perfil-card {
+      position: absolute;
+      top: 70px;
+      right: 0;
+      background-color: #1a1b23;
+      border: 1px solid #BC0808;
+      border-radius: 16px;
+      width: 280px; /* Reduzido de 320px para 260px */
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);
+      cursor: default;
+
+      .card-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 25px 15px 15px; /* Espaçamento interno reduzido */
+        border-bottom: 1px solid #333;
+
+        .avatar-grande {
+          width: 65px; /* Reduzido de 80px */
+          height: 65px; /* Reduzido de 80px */
+          border-radius: 50%;
+          background-color: #333;
+          border: 2px solid #BC0808;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 26px; /* Fonte proporcional ao novo tamanho */
+          font-weight: bold;
+          font-family: 'Arial Black', sans-serif;
+          color: #ffffff;
+          margin-bottom: 10px; /* Margem reduzida */
+        }
+
+        .nome {
+          font-family: Arial, sans-serif;
+          font-size: 18px; /* Levemente menor */
+          font-weight: bold;
+          color: #ffffff;
+          margin: 0 0 10px 0;
+        }
+
+        .email {
+          font-family: Arial, sans-serif;
+          font-size: 13px; /* Levemente menor */
+          color: #aaaaaa;
+          margin: 0 0 0px 0; /* Margem reduzida */
+        }
+
+        .btn-gerenciar {
+          background: transparent;
+          border: 1px solid #aaaaaa;
+          color: #ffffff;
+          padding: 8px 16px; /* Botão mais fino */
+          border-radius: 20px;
+          font-family: Arial, sans-serif;
+          font-size: 13px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background 0.2s;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.1);
+          }
+        }
+      }
+
+      .card-actions {
+        display: flex;
+        flex-direction: column;
+        padding: 5px 10px; /* Padding reduzido para diminuir a altura final */
+
+        .btn-sair {
+          background: transparent;
+          border: none;
+          color: #ffffff;
+          padding: 12px; /* Reduzido de 15px */
+          font-family: Arial, sans-serif;
+          font-size: 15px;
+          font-weight: bold;
+          text-align: center;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s;
+
+          &:hover {
+            background: #333;
+            color: #BC0808;
+          }
+        }
+      }
+    }
+  }
+}

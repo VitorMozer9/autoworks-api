@@ -1,0 +1,43 @@
+.boxes {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centraliza verticalmente */
+  height: calc(100vh - 4rem); /* Ocupa a altura total da tela */
+  overflow: hidden;
+  gap: 50px; /* Espaço entre as caixas vermelhas */
+  color: #ffffff;
+  font-family: 'Arial Black', sans-serif;
+
+  /* Estilo compartilhado para as duas caixas */
+  .cadastro-box, .login-box {
+    display: flex;
+    flex-direction: column;
+    height: 460px;
+    width: 325px; /* Largura proporcional ao design da tela*/
+    padding: 40px; /* Cria o espaço vermelho em volta dos itens */
+    background-color: #BC0808;
+    box-sizing: border-box;
+
+    h1 {
+      margin: 0 0 25px 0;
+      text-transform: uppercase;
+      font-size: 26px;
+    }
+
+    .inputs-cadastro, .inputs-login {
+      display: flex;
+      flex-direction: column;
+      gap: 15px; /* Espaço entre cada input */
+      margin-bottom: 100px; /* Espaço entre os inputs e o botão */
+
+      input {
+        padding: 12px 15px;
+        border: none;
+        border-radius: 12px;
+        outline: none;
+        font-size: 16px;
+        font-family: 'Arial Black', sans-serif; /* Fonte mais legível para o texto digitado */
+      }
+    }
+  }
+}

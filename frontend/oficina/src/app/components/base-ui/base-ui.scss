@@ -1,0 +1,16 @@
+.fundo-gradiente {
+  background: linear-gradient(to bottom, #2A2424 0%, #000000 100%);
+
+  min-height: 100vh;
+  width: 100%;
+
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+
+  .conteudo-da-pagina {
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+  
+}

@@ -1,0 +1,132 @@
+.cadastro-page {
+  height: calc(100vh - 66px - 4rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.funcionario-form {
+  width: 100%;
+  max-width: 416px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  h1 {
+    margin: 0 0 20px 0;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  h2 {
+    margin: 20px;
+    margin-top: 30px;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  label {
+    color: #ffffff;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+
+  input[type='text'],
+  input[type='email'],
+  input[type='password'] {
+    width: 100%;
+    height: 42px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding-left: 15px;
+    font-size: 16px;
+    color: #333333;
+    outline: none;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+
+    &::placeholder {
+      color: #8C8C8C;
+    }
+  }
+
+  .area-options {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    gap: 10px;
+  }
+
+  .area-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    flex: 1;
+
+    input {
+      display: none;
+    }
+
+    span {
+      width: 26px;
+      height: 26px;
+      border: 3px solid #ffffff;
+      border-radius: 50%;
+      position: relative;
+      margin-bottom: 8px;
+      transition: border-color 0.3s ease;
+
+      &::after {
+        content: '';
+        width: 12px;
+        height: 12px;
+        background-color: #BC0808;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+      }
+    }
+
+    p {
+      margin: 0;
+      font-size: 11px;
+      color: #ffffff;
+      text-align: center;
+      font-family: 'Arial Black', sans-serif;
+      text-transform: uppercase;
+    }
+
+    input:checked + span {
+      border-color: #BC0808;
+    }
+
+    input:checked + span::after {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+
+  .acao-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+}
