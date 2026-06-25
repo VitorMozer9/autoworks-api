@@ -30,7 +30,7 @@ export class Cadastro {
       return;
     }
 
-    this.authService.cadastrar({ email: this.dadosForm.email, senha: this.dadosForm.senha }).subscribe({
+    this.authService.cadastrar(this.dadosForm).subscribe({
       next: () => {
         alert('Funcionário cadastrado com sucesso!');
         this.cancelar();

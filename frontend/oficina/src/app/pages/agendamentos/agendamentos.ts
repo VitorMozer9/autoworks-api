@@ -91,8 +91,8 @@ export class Agendamentos implements OnInit {
         error: (erro) => {
           console.error('Erro ao editar:', erro);
           alert('Erro ao editar agendamento.');
+        }
       });
-
     }
   }
 

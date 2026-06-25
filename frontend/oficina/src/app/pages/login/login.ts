@@ -30,7 +30,15 @@ export class Login {
   cadastrarUsuario() {
 
 
-    this.authService.cadastrar({ email: this.cadastro.email, senha: this.cadastro.senha }).subscribe({
+    this.authService.cadastrar({
+      nome: this.cadastro.nome,
+      email: this.cadastro.email,
+      senha: this.cadastro.senha,
+      areaAtuacao: '',
+      telefone: '',
+      cpf: '',
+      endereco: ''
+    }).subscribe({
       next: () => {
         alert('Usuário cadastrado com sucesso!');
         this.cadastro = { nome: '', email: '', senha: '' };
