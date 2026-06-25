@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AgendamentoService, AgendamentoOS } from '../../services/agendamento-service';
@@ -49,20 +48,15 @@ export class Agendamentos implements OnInit {
   }
 
   carregarDados() {
-    // ATUAL (Teste local)
-    this.agendamentos = this.agendamentoService.getTodos();
-
-    // BACKEND:
-    /*
     this.agendamentoService.getTodos().subscribe({
       next: (dadosDaApi) => {
         this.agendamentos = dadosDaApi;
       },
       error: (erro) => {
         console.error('Erro ao buscar ordens:', erro);
+        alert('Erro ao buscar agendamentos.');
       }
     });
-    */
   }
 
   abrirDetalhes(item: AgendamentoOS) {
@@ -87,39 +81,30 @@ export class Agendamentos implements OnInit {
         this.itemSelecionado.valor = parseFloat(this.itemSelecionado.valor.replace(',', '.'));
       }
 
-      // ATUAL (Teste local)
-      this.agendamentoService.atualizar(this.itemSelecionado.id, this.itemSelecionado as AgendamentoOS);
-      this.carregarDados();
-      this.fecharModal();
-
-      // BACKEND:
-      /*
       this.agendamentoService.atualizar(this.itemSelecionado.id, this.itemSelecionado as AgendamentoOS).subscribe({
         next: () => {
-          this.carregarDados(); // Recarrega a lista do banco
+          this.carregarDados();
           this.fecharModal();
         },
-        error: (erro) => console.error('Erro ao editar:', erro)
+        error: (erro) => {
+          console.error('Erro ao editar:', erro);
+          alert('Erro ao editar agendamento.');
+        }
       });
-      */
     }
   }
 
   cancelarAgendamento(id: number) {
     if (confirm('Deseja cancelar?')) {
-      // ATUAL (Teste local)
-      this.agendamentoService.remover(id);
-      this.carregarDados();
-
-      // BACKEND:
-      /*
       this.agendamentoService.remover(id).subscribe({
         next: () => {
           this.carregarDados();
         },
-        error: (erro) => console.error('Erro ao excluir:', erro)
+        error: (erro) => {
+          console.error('Erro ao excluir:', erro);
+          alert('Erro ao excluir agendamento.');
+        }
       });
-      */
     }
   }
 

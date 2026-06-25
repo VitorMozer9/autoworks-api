@@ -30,7 +30,7 @@ export class NavBar implements OnInit {
     this.iniciais = this.gerarIniciais(this.usuario.nome);
 
     // Chama a função que constrói o menu
-    this.definirMenu(this.usuario.areaAtuacao);
+    this.definirMenu(this.usuario.areaAtuacao || 'ADMINISTRADOR');
   }
 
   definirMenu(cargo: string) {
@@ -41,7 +41,7 @@ export class NavBar implements OnInit {
     } else if (cargo === 'MECANICO_ESPECIALISTA' || cargo === 'MECANICO_ESPECIFICO') {
       this.itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS'];
     } else {
-      this.itens = ['HOME']; // Fallback de segurança
+      this.itens = ['HOME', 'SERVIÇOS', 'AGENDAMENTOS', 'PEÇAS', 'CADASTROS']; // Fallback enquanto o backend não retorna perfil
     }
   }
 
