@@ -1,0 +1,112 @@
+<app-base-ui>
+  <app-nav-bar></app-nav-bar>
+
+  <div class="estoque-container">
+    <h1 class="titulo">ESTOQUE</h1>
+
+    <div class="categorias">
+      <button class="btn-categoria" [class.ativo]="categoriaAtiva === 'MOTOR'" (click)="selecionarCategoria('MOTOR')">⚙️ MOTOR</button>
+      <button class="btn-categoria" [class.ativo]="categoriaAtiva === 'ELETRICA'" (click)="selecionarCategoria('ELETRICA')">⚡ ELÉTRICA</button>
+      <button class="btn-categoria" [class.ativo]="categoriaAtiva === 'SUSPENSAO'" (click)="selecionarCategoria('SUSPENSAO')">🔧 SUSPENSÃO</button>
+      <button class="btn-categoria" [class.ativo]="categoriaAtiva === 'FUNILARIA'" (click)="selecionarCategoria('FUNILARIA')">🪛 FUNILARIA</button>
+      <button class="btn-categoria" [class.ativo]="categoriaAtiva === 'OLEO'" (click)="selecionarCategoria('OLEO')">🛢️ ÓLEO</button>
+      <button class="btn-categoria" [class.ativo]="categoriaAtiva === 'OUTROS'" (click)="selecionarCategoria('OUTROS')">OUTROS</button>
+    </div>
+
+    <div class="barra-acoes">
+      <div class="inputs">
+        <input type="text" [(ngModel)]="filtroNome" placeholder="Nome...">
+        <input type="text" [(ngModel)]="filtroCodigo" placeholder="Código...">
+      </div>
+      <div class="botoes">
+        <button class="btn-buscar" (click)="buscar()">BUSCAR</button>
+        <button class="btn-editar" (click)="editar()">EDITAR</button>
+        <button class="btn-remover" (click)="remover()">REMOVER</button>
+      </div>
+    </div>
+
+    <div class="tabela-wrapper">
+      <table class="tabela-estoque">
+        <thead>
+          <tr>
+            <th>Peça</th>
+            <th>Código</th>
+            <th>Quantidade</th>
+            <th>Marca</th>
+            <th>Data Aquisição</th>
+            <th>Valor Unitário</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (peca of pecasFiltradas; track peca.id) {
+            <tr
+              (click)="selecionarLinha(peca.id)"
+              [class.linha-selecionada]="pecaSelecionadaId === peca.id">
+              <td>{{ peca.nome }}</td>
+              <td>{{ peca.codigo }}</td>
+              <td>{{ peca.quantidade }}</td>
+              <td>{{ peca.marca }}</td>
+              <td>{{ peca.dataAquisicao }}</td>
+              <td>{{ formatarMoeda(peca.valor) }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" style="text-align: center; color: #666;">Nenhuma peça encontrada.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <button class="btn-adicionar" (click)="adicionarProduto()">+ ADICIONAR PRODUTO</button>
+  </div>
+
+  @if (modalAberto) {
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <h2>{{ modoEdicao ? 'Editar Peça' : 'Adicionar Nova Peça' }}</h2>
+
+        <div class="modal-body">
+          <label>Nome da Peça:</label>
+          <input type="text" [(ngModel)]="pecaForm.nome" placeholder="Ex: Filtro de Óleo">
+
+          <label>Código:</label>
+          <input type="text" [(ngModel)]="pecaForm.codigo" placeholder="Ex: FLT-001">
+
+          <label>Categoria:</label>
+          <select [(ngModel)]="pecaForm.categoria">
+            <option value="MOTOR">Motor</option>
+            <option value="ELETRICA">Elétrica</option>
+            <option value="SUSPENSAO">Suspensão</option>
+            <option value="FUNILARIA">Funilaria</option>
+            <option value="OLEO">Óleo</option>
+            <option value="OUTROS">Outros</option>
+          </select>
+
+          <label>Quantidade:</label>
+          <input type="number" [(ngModel)]="pecaForm.quantidade" placeholder="Ex: 10" min="0" (keydown)="evitarNegativo($event)">
+
+          <label>Marca:</label>
+          <input type="text" [(ngModel)]="pecaForm.marca" placeholder="Ex: Tecfil">
+
+          <label>Data de Aquisição:</label>
+          <div class="input-com-icone">
+            <input type="text" [(ngModel)]="pecaForm.dataAquisicao" placeholder="DD/MM/AAAA" maxlength="10" (input)="formatarData($event)">
+            <div class="icone-wrapper">
+              <input type="date" (change)="atualizarDataPeloCalendario($event)">
+              <span>📅</span>
+            </div>
+          </div>
+
+          <label>Valor Unitário (R$):</label>
+          <input type="text" [(ngModel)]="pecaForm.valor" placeholder="Ex: 35,50">
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn-cancelar" (click)="fecharModal()">Cancelar</button>
+          <button class="btn-salvar" (click)="salvarPeca()">Salvar</button>
+        </div>
+      </div>
+    </div>
+  }
+</app-base-ui>

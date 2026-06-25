@@ -1,0 +1,139 @@
+// Paǵina de apresentaação dos serviços disponíveis na oficina
+.servico-page {
+    min-height: 100vh;
+    padding: 4rem clamp(1rem, 5vw, 5rem);
+    color: black;
+}
+
+.servico-container {
+    width: 100%;
+    max-width: 1250px;
+    margin: 3rem auto 0;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+// Card de cada um dos serviços disponiveis 
+.servico-card {
+    min-height: 500px;
+    padding: 1.5rem;
+    background-color: #BC0808;
+
+    display: flex;
+    flex-direction: column;    
+}
+
+// Especificações da imagem de apresentação do serviço
+.servico-img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    background-color: #d9d9d9;
+}
+
+// Aréa de descrição do tipo de serviço
+.servico-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+// Titulo do Serviço prestado
+.servico-titulo {
+    margin-top: 1rem;
+
+    h2 {
+        margin: 0;
+        font-family: 'Arial Black', sans-serif;
+        font-size: clamp(1.6rem, 1vw, 2rem);
+        text-transform: uppercase;
+        color: #ffffff;
+    }
+}
+
+// Descrição do serviço prestado
+.servico-description {
+    margin: 1rem 0;
+    font-family: 'Alllkin', sans-serif;
+    padding-left: 1.2rem;
+    font-size: 1rem;
+    line-height: 1.3;
+    color: white;
+}
+
+// Preço do serviço prestado
+.servico-price {
+    margin-top: auto;
+    margin-bottom: 1.5rem;
+    
+    text-align: right;
+    font-family:'Arial Black', sans-serif;
+    font-size: 1.8rem;
+    color: #ffffff;
+}
+
+// Botão para agendar o serviço selecionado
+.agend-button {
+    width: 80%;
+    margin: 0 auto;
+    padding: 1rem;
+
+    border: none;
+    border-radius: 1rem;
+    background-color: #1a1a1a;
+
+    font-family: 'Arial Black', sans-serif;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    color: #ffffff;
+
+    cursor: pointer;
+}
+
+.agend-button:hover {
+    background-color: #000000;
+    transform: scale(1.03);
+}
+
+// Card de adicionar serviço
+.add-servico {
+    min-height: 500px;
+    padding: 1.5rem;
+    color: white;
+    font-family: 'Alllkin', sans-serif;
+
+    border: 4px dashed #BC0808;
+    background-color: rgba(208, 0, 0, 0.15);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.add-servico:hover {
+    background-color: rgba(208, 0, 0, 0.35);
+    transform: scale(1.02);
+}
+
+// Botão de adicionar serviço
+.add-botton {
+    width: 110px;
+    height: 110px;
+
+    border: none;
+    border-radius: 50%;
+    background-color: #BC0808;
+
+    font-size: 5rem;
+    line-height: 1;
+    color: #ffffff;
+
+    cursor: pointer;
+}
