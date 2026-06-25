@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 })
 export class BotaoSecundario {
   @Input() textoBotao: string = '';
+  @Input() disabled = false;
 }

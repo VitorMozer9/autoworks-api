@@ -1,20 +1,8 @@
 import { Injectable } from '@angular/core';
-// TODO: DESCOMENTAR importações abaixo quando for conectar com o backend
-// import { HttpClient } from '@angular/common/http';
-// import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 
-/* FORMATO DO DADO (JSON) ESPERADO PELO FRONT-END:
-  {
-    "id": number (opcional na criação),
-    "nome": string,
-    "codigo": string,
-    "quantidade": number,
-    "marca": string,
-    "dataAquisicao": string (formato "DD/MM/AAAA"),
-    "valor": number (decimal, ex: 35.50),
-    "categoria": string ("MOTOR", "ELETRICA", "SUSPENSAO", "FUNILARIA", "OLEO", "OUTROS")
-  }
-*/
 export interface Peca {
   id?: number;
   nome: string;
@@ -26,53 +14,95 @@ export interface Peca {
   categoria: string;
 }
 
+export interface PecaFiltros {
+  nome?: string;
+  codigo?: string;
+  categoria?: string;
+}
+
+type ListResponse<T> = T[] | { content?: T[]; data?: T[] };
+
 @Injectable({
   providedIn: 'root'
 })
 export class PecasService {
-  // TODO: DESCOMENTAR URL E CONSTRUTOR NA INTEGRAÇÃO
-  // private apiUrl = 'http://localhost:8080/api/pecas'; // Rota de exemplo
-  // constructor(private http: HttpClient) {}
+  private apiUrl = `${environment.apiUrl}/pecas`;
 
-  // ==========================================
-  // TODO: REMOVER ESTE ARRAY QUANDO O BACKEND ESTIVER CONECTADO
-  private pecas: Peca[] = [
-    { id: 1, nome: 'Filtro de Óleo', codigo: 'FLT-001', quantidade: 15, marca: 'Tecfil', dataAquisicao: '10/06/2026', valor: 35.50, categoria: 'OLEO' },
-    { id: 2, nome: 'Pastilha de Freio', codigo: 'FRE-022', quantidade: 8, marca: 'Cobreq', dataAquisicao: '15/06/2026', valor: 120.00, categoria: 'SUSPENSAO' }
-  ];
-  // ==========================================
+  constructor(private http: HttpClient) { }
 
-  getTodos() {
-    // TODO: REMOVER linha abaixo (Teste Local)
-    return this.pecas;
+  getTodos(filtros: PecaFiltros = {}): Observable<Peca[]> {
+    let params = new HttpParams();
 
-    // TODO: DESCOMENTAR chamada real (Retorna um Observable com array de Peca)
-    // return this.http.get<Peca[]>(this.apiUrl);
+    if (filtros.nome) {
+      params = params.set('nome', filtros.nome);
+    }
+
+    if (filtros.codigo) {
+      params = params.set('codigo', filtros.codigo);
+    }
+
+    if (filtros.categoria) {
+      params = params.set('categoria', filtros.categoria);
+    }
+
+    return this.http.get<ListResponse<Peca>>(this.apiUrl, { params }).pipe(
+      map((resposta) => this.extrairLista(resposta))
+    );
   }
 
-  adicionar(peca: Peca) {
-    // TODO: REMOVER bloco abaixo (Teste Local)
-    peca.id = Date.now();
-    this.pecas.push(peca);
-
-    // TODO: DESCOMENTAR chamada real (Envia JSON da Peca sem ID, retorna a Peca criada com ID)
-    // return this.http.post<Peca>(this.apiUrl, peca);
+  adicionar(peca: Peca): Observable<Peca> {
+    return this.http.post<Peca>(
+      this.apiUrl,
+      this.normalizarPecaParaApi(peca)
+    );
   }
 
-  atualizar(id: number, dadosAtualizados: Peca) {
-    // TODO: REMOVER bloco abaixo (Teste Local)
-    const index = this.pecas.findIndex(p => p.id === id);
-    if (index !== -1) this.pecas[index] = { ...dadosAtualizados };
-
-    // TODO: DESCOMENTAR chamada real (Envia ID na URL e JSON atualizado no corpo)
-    // return this.http.put<Peca>(`${this.apiUrl}/${id}`, dadosAtualizados);
+  atualizar(id: number, dadosAtualizados: Peca): Observable<Peca> {
+    return this.http.put<Peca>(
+      `${this.apiUrl}/${id}`,
+      this.normalizarPecaParaApi(dadosAtualizados)
+    );
   }
 
-  remover(id: number) {
-    // TODO: REMOVER bloco abaixo (Teste Local)
-    this.pecas = this.pecas.filter(p => p.id !== id);
+  remover(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 
-    // TODO: DESCOMENTAR chamada real
-    // return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  private normalizarPecaParaApi(peca: Peca): Omit<Peca, 'id'> {
+    const { id, ...dados } = peca;
+
+    return {
+      ...dados,
+      dataAquisicao: this.converterDataParaApi(dados.dataAquisicao),
+      valor: Number(dados.valor),
+      quantidade: Number(dados.quantidade)
+    };
+  }
+
+  private converterDataParaApi(data: string): string {
+    if (!data) {
+      return data;
+    }
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(data)) {
+      return data;
+    }
+
+    const match = data.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+
+    if (!match) {
+      throw new Error('Data de aquisição inválida. Use o formato DD/MM/AAAA.');
+    }
+
+    const [, dia, mes, ano] = match;
+
+    return `${ano}-${mes}-${dia}`;
+  }
+
+  private extrairLista(resposta: ListResponse<Peca>): Peca[] {
+    if (Array.isArray(resposta)) return resposta;
+    if (Array.isArray(resposta?.content)) return resposta.content;
+    if (Array.isArray(resposta?.data)) return resposta.data;
+    return [];
   }
 }

@@ -1,7 +1,11 @@
 <app-base-ui>
   <app-nav-bar></app-nav-bar>
   <div class="ordens-de-servico">
-    @if (agendamentos.length === 0) {
+    @if (carregando) {
+      <div class="sem-dados">
+        <h1>Carregando agendamentos...</h1>
+      </div>
+    } @else if (agendamentos.length === 0) {
       <div class="sem-dados">
         <h1>Não há ordens de serviço no momento</h1>
       </div>
@@ -18,7 +22,7 @@
             <p><strong>Status:</strong> {{ formatarStatus(item.status) }}</p>
 
             <div class="acoes-card">
-              <app-botao-terceiro textoBotao="Cancelar" corBotao="#BC0808" (click)="cancelarAgendamento(item.id!)"></app-botao-terceiro>
+              <app-botao-terceiro [textoBotao]="removendoAgendamento ? 'Cancelando...' : 'Cancelar'" corBotao="#BC0808" (click)="cancelarAgendamento(item.id!)"></app-botao-terceiro>
               <app-botao-terceiro textoBotao="Editar" corBotao="#B38114" (click)="abrirEdicao(item)"></app-botao-terceiro>
               <app-botao-terceiro textoBotao="Detalhes" corBotao="#978E8E" (click)="abrirDetalhes(item)"></app-botao-terceiro>
             </div>
@@ -95,7 +99,7 @@
         <div class="modal-footer">
           <button (click)="fecharModal()">Fechar</button>
           @if (modoEdicao) {
-            <button class="btn-salvar" (click)="salvarEdicao()">Salvar</button>
+            <button class="btn-salvar" [disabled]="salvandoAgendamento" (click)="salvarEdicao()">{{ salvandoAgendamento ? 'Salvando...' : 'Salvar' }}</button>
         }
         </div>
       </div>

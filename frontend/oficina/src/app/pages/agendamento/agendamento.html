@@ -40,7 +40,7 @@
       <!-- Botões de limpar e de envio -->
       <div class="botoes">
         <app-botao-secundario textoBotao="Cancelar" (click)="cancelar()"></app-botao-secundario>
-        <app-botao-secundario textoBotao="Agendar" (click)="agendar()"></app-botao-secundario>
+        <app-botao-secundario [textoBotao]="salvandoAgendamento ? 'Salvando...' : 'Agendar'" [disabled]="salvandoAgendamento" (click)="agendar()"></app-botao-secundario>
       </div>
     </div>
 </app-base-ui>

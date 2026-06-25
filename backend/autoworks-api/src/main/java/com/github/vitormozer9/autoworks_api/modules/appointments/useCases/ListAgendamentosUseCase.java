@@ -3,6 +3,7 @@ package com.github.vitormozer9.autoworks_api.modules.appointments.useCases;
 import com.github.vitormozer9.autoworks_api.modules.appointments.dtos.AgendamentoResponseDTO;
 import com.github.vitormozer9.autoworks_api.modules.appointments.mappers.AgendamentoMapper;
 import com.github.vitormozer9.autoworks_api.modules.appointments.repositories.AppointmentRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,7 @@ public class ListAgendamentosUseCase {
 
     @Transactional(readOnly = true)
     public List<AgendamentoResponseDTO> execute() {
-        return appointmentRepository.findAll()
+        return appointmentRepository.findAll(Sort.by(Sort.Direction.DESC, "id"))
                 .stream()
                 .map(agendamentoMapper::toResponse)
                 .toList();
