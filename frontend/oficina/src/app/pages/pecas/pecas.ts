@@ -26,8 +26,9 @@ export class Pecas implements OnInit {
   modalAberto = false;
   modoEdicao = false;
   pecaForm: Partial<Peca> = {};
+  salvandoPeca = false;
 
-  constructor(private pecasService: PecasService) {}
+  constructor(private pecasService: PecasService) { }
 
   ngOnInit() {
     this.carregarDados();
@@ -102,29 +103,48 @@ export class Pecas implements OnInit {
 
   fecharModal() {
     this.modalAberto = false;
+    this.salvandoPeca = false;
     this.pecaForm = {};
   }
 
   salvarPeca() {
-    // Garante que a quantidade nunca fique negativa caso passe pela interface
+    if (this.salvandoPeca) {
+      return;
+    }
+
+    const erro = this.validarPeca();
+    if (erro) {
+      alert(erro);
+      return;
+    }
+
     if (Number(this.pecaForm.quantidade) < 0) {
       this.pecaForm.quantidade = 0;
     }
 
-    // Pega o valor digitado com vírgula e converte de volta para o formato numérico americano
     if (typeof this.pecaForm.valor === 'string') {
-      // Tira os pontos de milhar e troca a vírgula decimal por ponto
-      let valorLimpo = (this.pecaForm.valor as string).replace(/\./g, '').replace(',', '.');
+      const valorLimpo = (this.pecaForm.valor as string)
+        .replace(/\./g, '')
+        .replace(',', '.');
+
       this.pecaForm.valor = parseFloat(valorLimpo);
     }
 
     if (typeof this.pecaForm.quantidade === 'string') {
       this.pecaForm.quantidade = parseInt(this.pecaForm.quantidade, 10);
     }
+    this.salvandoPeca = true;
 
-    const requisicao = this.modoEdicao && this.pecaForm.id
-      ? this.pecasService.atualizar(this.pecaForm.id, this.pecaForm as Peca)
-      : this.pecasService.adicionar(this.pecaForm as Peca);
+    let requisicao;
+
+    try {
+      requisicao = this.modoEdicao && this.pecaForm.id
+        ? this.pecasService.atualizar(this.pecaForm.id, this.pecaForm as Peca)
+        : this.pecasService.adicionar(this.pecaForm as Peca);
+    } catch (erro) {
+      alert(erro instanceof Error ? erro.message : 'Dados inválidos.');
+      return;
+    }
 
     requisicao.subscribe({
       next: () => {
@@ -135,8 +155,33 @@ export class Pecas implements OnInit {
       error: (erro) => {
         console.error('Erro ao salvar peça:', erro);
         alert('Erro ao salvar peça. Verifique os dados informados.');
+        this.salvandoPeca = false;
       }
     });
+  }
+
+  private validarPeca(): string | null {
+    if (!this.pecaForm.nome?.trim()) return 'Nome da peça é obrigatório.';
+    if (!this.pecaForm.codigo?.trim()) return 'Código é obrigatório.';
+    if (!this.pecaForm.categoria) return 'Categoria é obrigatória.';
+
+    if (this.pecaForm.dataAquisicao && !/^\d{2}\/\d{2}\/\d{4}$/.test(this.pecaForm.dataAquisicao) && !/^\d{4}-\d{2}-\d{2}$/.test(this.pecaForm.dataAquisicao)) {
+      return 'Data de aquisição inválida. Use DD/MM/AAAA.';
+    }
+
+    const quantidade = Number(this.pecaForm.quantidade);
+    if (Number.isNaN(quantidade) || quantidade < 0) return 'Quantidade deve ser maior ou igual a zero.';
+
+    const valor = typeof this.pecaForm.valor === 'string'
+      ? Number((this.pecaForm.valor as string).replace(/\./g, '').replace(',', '.'))
+      : Number(this.pecaForm.valor);
+
+    if (Number.isNaN(valor) || valor < 0) return 'Valor unitário deve ser maior ou igual a zero.';
+
+    this.pecaForm.quantidade = quantidade;
+    this.pecaForm.valor = valor;
+
+    return null;
   }
 
   remover() {

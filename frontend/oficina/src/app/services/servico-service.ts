@@ -28,4 +28,12 @@ export class ServicoService {
 
     return this.http.get<ServicoOficina[]>(this.apiUrl, { params });
   }
+
+  adicionar(servico: ServicoOficina): Observable<ServicoOficina> {
+    return this.http.post<ServicoOficina>(this.apiUrl, {
+      ...servico,
+      valorBase: Number(servico.valorBase),
+      ativo: servico.ativo ?? true
+    });
+  }
 }

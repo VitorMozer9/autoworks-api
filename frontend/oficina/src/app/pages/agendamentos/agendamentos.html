@@ -1,7 +1,11 @@
 <app-base-ui>
   <app-nav-bar></app-nav-bar>
   <div class="ordens-de-servico">
-    @if (agendamentos.length === 0) {
+    @if (carregando) {
+      <div class="sem-dados">
+        <h1>Carregando agendamentos...</h1>
+      </div>
+    } @else if (agendamentos.length === 0) {
       <div class="sem-dados">
         <h1>Não há ordens de serviço no momento</h1>
       </div>

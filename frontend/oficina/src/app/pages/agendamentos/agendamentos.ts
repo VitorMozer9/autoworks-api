@@ -16,13 +16,13 @@ import { BotaoTerceiro } from "../../components/botao-terceiro/botao-terceiro";
 })
 export class Agendamentos implements OnInit {
   agendamentos: AgendamentoOS[] = [];
-
+  carregando = false;
   // Controle do Modal
   modalAberto = false;
   modoEdicao = false;
   itemSelecionado: Partial<AgendamentoOS> = {};
 
-  constructor(private agendamentoService: AgendamentoService, private router: Router) {}
+  constructor(private agendamentoService: AgendamentoService, private router: Router) { }
 
   ngOnInit(): void {
     this.carregarDados();
@@ -48,14 +48,16 @@ export class Agendamentos implements OnInit {
   }
 
   carregarDados() {
-
-
+    this.carregando = true;
     this.agendamentoService.getTodos().subscribe({
       next: (dadosDaApi) => {
-        this.agendamentos = dadosDaApi;
+        console.log('Agendamentos retornados pela API:', dadosDaApi);
+        this.agendamentos = Array.isArray(dadosDaApi) ? dadosDaApi : [];
+        this.carregando = false;
       },
       error: (erro) => {
         console.error('Erro ao buscar ordens:', erro);
+        this.carregando = false;
         alert('Erro ao buscar agendamentos.');
       }
     });

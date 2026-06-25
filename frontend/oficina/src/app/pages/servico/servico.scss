@@ -137,3 +137,86 @@
 
     cursor: pointer;
 }
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background-color: #1a1b23;
+    padding: 30px;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90%;
+    color: #ffffff;
+    font-family: 'Arial Black', sans-serif;
+
+    h2 {
+        margin-top: 0;
+    }
+
+    .modal-body {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 14px;
+        color: #cccccc;
+        margin-top: 10px;
+    }
+
+    input,
+    textarea {
+        padding: 10px;
+        border-radius: 4px;
+        border: none;
+        background-color: #333333;
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    textarea {
+        min-height: 90px;
+        resize: vertical;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-salvar {
+            background-color: #4CAF50;
+            color: white;
+
+            &:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+        }
+    }
+}

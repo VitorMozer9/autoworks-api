@@ -82,19 +82,22 @@ export class PecasService {
   }
 
   private converterDataParaApi(data: string): string {
-    if (!data || /^\d{4}-\d{2}-\d{2}$/.test(data)) {
+    if (!data) {
       return data;
     }
 
-
-    const [dia, mes, ano] = data.split('/');
-
-    if (!dia || !mes || !ano) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(data)) {
       return data;
     }
 
-    return `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+    const match = data.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
 
+    if (!match) {
+      throw new Error('Data de aquisição inválida. Use o formato DD/MM/AAAA.');
+    }
 
+    const [, dia, mes, ano] = match;
+
+    return `${ano}-${mes}-${dia}`;
   }
 }
