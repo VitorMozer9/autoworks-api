@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { finalize } from 'rxjs';
 import { BaseUi } from '../../components/base-ui/base-ui';
 import { NavBar } from '../../components/nav-bar/nav-bar';
 import { PecasService, Peca } from '../../services/pecas-service';
@@ -26,22 +27,34 @@ export class Pecas implements OnInit {
   modalAberto = false;
   modoEdicao = false;
   pecaForm: Partial<Peca> = {};
+  salvandoPeca = false;
+  carregandoPecas = false;
+  removendoPeca = false;
 
-  constructor(private pecasService: PecasService) {}
+  constructor(private pecasService: PecasService, private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.carregarDados();
   }
 
   carregarDados() {
+    this.carregandoPecas = true;
+    this.changeDetectorRef.detectChanges();
+
     this.pecasService.getTodos({
       nome: this.filtroNome,
       codigo: this.filtroCodigo,
       categoria: this.categoriaAtiva
-    }).subscribe({
+    }).pipe(
+      finalize(() => {
+        this.carregandoPecas = false;
+        this.changeDetectorRef.detectChanges();
+      })
+    ).subscribe({
       next: (pecas) => {
-        this.pecasTotais = pecas;
-        this.pecasFiltradas = pecas;
+        const lista = this.extrairLista(pecas);
+        this.pecasTotais = [...lista];
+        this.pecasFiltradas = [...lista];
       },
       error: (erro) => {
         console.error('Erro ao buscar peças:', erro);
@@ -102,10 +115,21 @@ export class Pecas implements OnInit {
 
   fecharModal() {
     this.modalAberto = false;
+    this.salvandoPeca = false;
     this.pecaForm = {};
   }
 
   salvarPeca() {
+    if (this.salvandoPeca) {
+      return;
+    }
+
+    const erro = this.validarPeca();
+    if (erro) {
+      alert(erro);
+      return;
+    }
+
     // Garante que a quantidade nunca fique negativa caso passe pela interface
     if (Number(this.pecaForm.quantidade) < 0) {
       this.pecaForm.quantidade = 0;
@@ -122,14 +146,32 @@ export class Pecas implements OnInit {
       this.pecaForm.quantidade = parseInt(this.pecaForm.quantidade, 10);
     }
 
-    const requisicao = this.modoEdicao && this.pecaForm.id
-      ? this.pecasService.atualizar(this.pecaForm.id, this.pecaForm as Peca)
-      : this.pecasService.adicionar(this.pecaForm as Peca);
+    this.salvandoPeca = true;
+    this.changeDetectorRef.detectChanges();
 
-    requisicao.subscribe({
+    let requisicao;
+    try {
+      requisicao = this.modoEdicao && this.pecaForm.id
+        ? this.pecasService.atualizar(this.pecaForm.id, this.pecaForm as Peca)
+        : this.pecasService.adicionar(this.pecaForm as Peca);
+    } catch (erro) {
+      console.error('Erro ao preparar peça para salvar:', erro);
+      alert(erro instanceof Error ? erro.message : 'Erro ao preparar peça para salvar.');
+      this.salvandoPeca = false;
+      this.changeDetectorRef.detectChanges();
+      return;
+    }
+
+    requisicao.pipe(
+      finalize(() => {
+        this.salvandoPeca = false;
+        this.changeDetectorRef.detectChanges();
+      })
+    ).subscribe({
       next: () => {
         this.fecharModal();
         this.pecaSelecionadaId = null;
+        alert('Peça salva com sucesso.');
         this.carregarDados();
       },
       error: (erro) => {
@@ -139,23 +181,68 @@ export class Pecas implements OnInit {
     });
   }
 
+  private validarPeca(): string | null {
+    if (!this.pecaForm.nome?.trim()) return 'Nome da peça é obrigatório.';
+    if (!this.pecaForm.codigo?.trim()) return 'Código é obrigatório.';
+    if (!this.pecaForm.categoria) return 'Categoria é obrigatória.';
+
+    if (this.pecaForm.dataAquisicao && !/^\d{2}\/\d{2}\/\d{4}$/.test(this.pecaForm.dataAquisicao) && !/^\d{4}-\d{2}-\d{2}$/.test(this.pecaForm.dataAquisicao)) {
+      return 'Data de aquisição inválida. Use DD/MM/AAAA.';
+    }
+
+    const quantidade = Number(this.pecaForm.quantidade);
+    if (Number.isNaN(quantidade) || quantidade < 0) return 'Quantidade deve ser maior ou igual a zero.';
+
+    const valor = typeof this.pecaForm.valor === 'string'
+      ? Number((this.pecaForm.valor as string).replace(/\./g, '').replace(',', '.'))
+      : Number(this.pecaForm.valor);
+
+    if (Number.isNaN(valor) || valor < 0) return 'Valor unitário deve ser maior ou igual a zero.';
+
+    this.pecaForm.quantidade = quantidade;
+    this.pecaForm.valor = valor;
+
+    return null;
+  }
+
   remover() {
     if (!this.pecaSelecionadaId) {
       alert('Selecione uma peça na tabela para remover.');
       return;
     }
-    if (confirm('Tem certeza que deseja remover esta peça?')) {
-      this.pecasService.remover(this.pecaSelecionadaId).subscribe({
-        next: () => {
-          this.pecaSelecionadaId = null;
-          this.carregarDados();
-        },
-        error: (erro) => {
-          console.error('Erro ao remover peça:', erro);
-          alert('Erro ao remover peça.');
-        }
-      });
+    if (!confirm('Tem certeza que deseja remover esta peça?') || this.removendoPeca) {
+      return;
     }
+
+    const idRemovido = this.pecaSelecionadaId;
+    this.removendoPeca = true;
+    this.changeDetectorRef.detectChanges();
+
+    this.pecasService.remover(idRemovido).pipe(
+      finalize(() => {
+        this.removendoPeca = false;
+        this.changeDetectorRef.detectChanges();
+      })
+    ).subscribe({
+      next: () => {
+        this.pecaSelecionadaId = null;
+        this.pecasTotais = this.pecasTotais.filter((peca) => peca.id !== idRemovido);
+        this.pecasFiltradas = this.pecasFiltradas.filter((peca) => peca.id !== idRemovido);
+        alert('Peça removida com sucesso.');
+        this.carregarDados();
+      },
+      error: (erro) => {
+        console.error('Erro ao remover peça:', erro);
+        alert('Erro ao remover peça.');
+      }
+    });
+  }
+
+  private extrairLista(resposta: Peca[] | { content?: Peca[]; data?: Peca[] }): Peca[] {
+    if (Array.isArray(resposta)) return resposta;
+    if (Array.isArray(resposta?.content)) return resposta.content;
+    if (Array.isArray(resposta?.data)) return resposta.data;
+    return [];
   }
 
   // Formata a data automaticamente (DD/MM/AAAA) enquanto o usuário digita

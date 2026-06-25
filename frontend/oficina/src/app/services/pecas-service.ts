@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface Peca {
@@ -20,6 +20,8 @@ export interface PecaFiltros {
   categoria?: string;
 }
 
+type ListResponse<T> = T[] | { content?: T[]; data?: T[] };
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,7 +32,6 @@ export class PecasService {
 
   getTodos(filtros: PecaFiltros = {}): Observable<Peca[]> {
     let params = new HttpParams();
-
 
     if (filtros.nome) {
       params = params.set('nome', filtros.nome);
@@ -44,9 +45,9 @@ export class PecasService {
       params = params.set('categoria', filtros.categoria);
     }
 
-    return this.http.get<Peca[]>(this.apiUrl, { params });
-
-
+    return this.http.get<ListResponse<Peca>>(this.apiUrl, { params }).pipe(
+      map((resposta) => this.extrairLista(resposta))
+    );
   }
 
   adicionar(peca: Peca): Observable<Peca> {
@@ -70,31 +71,38 @@ export class PecasService {
   private normalizarPecaParaApi(peca: Peca): Omit<Peca, 'id'> {
     const { id, ...dados } = peca;
 
-
     return {
       ...dados,
       dataAquisicao: this.converterDataParaApi(dados.dataAquisicao),
       valor: Number(dados.valor),
       quantidade: Number(dados.quantidade)
     };
-
-
   }
 
   private converterDataParaApi(data: string): string {
-    if (!data || /^\d{4}-\d{2}-\d{2}$/.test(data)) {
+    if (!data) {
       return data;
     }
 
-
-    const [dia, mes, ano] = data.split('/');
-
-    if (!dia || !mes || !ano) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(data)) {
       return data;
     }
 
-    return `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+    const match = data.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
 
+    if (!match) {
+      throw new Error('Data de aquisição inválida. Use o formato DD/MM/AAAA.');
+    }
 
+    const [, dia, mes, ano] = match;
+
+    return `${ano}-${mes}-${dia}`;
+  }
+
+  private extrairLista(resposta: ListResponse<Peca>): Peca[] {
+    if (Array.isArray(resposta)) return resposta;
+    if (Array.isArray(resposta?.content)) return resposta.content;
+    if (Array.isArray(resposta?.data)) return resposta.data;
+    return [];
   }
 }

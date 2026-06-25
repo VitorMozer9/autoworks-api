@@ -21,7 +21,7 @@
       <div class="botoes">
         <button class="btn-buscar" (click)="buscar()">BUSCAR</button>
         <button class="btn-editar" (click)="editar()">EDITAR</button>
-        <button class="btn-remover" (click)="remover()">REMOVER</button>
+        <button class="btn-remover" [disabled]="removendoPeca" (click)="remover()">{{ removendoPeca ? 'REMOVENDO...' : 'REMOVER' }}</button>
       </div>
     </div>
 
@@ -38,6 +38,11 @@
           </tr>
         </thead>
         <tbody>
+          @if (carregandoPecas) {
+            <tr>
+              <td colspan="6" style="text-align: center; color: #666;">Carregando peças...</td>
+            </tr>
+          } @else {
           @for (peca of pecasFiltradas; track peca.id) {
             <tr
               (click)="selecionarLinha(peca.id)"
@@ -53,6 +58,7 @@
             <tr>
               <td colspan="6" style="text-align: center; color: #666;">Nenhuma peça encontrada.</td>
             </tr>
+          }
           }
         </tbody>
       </table>
@@ -104,7 +110,7 @@
 
         <div class="modal-footer">
           <button class="btn-cancelar" (click)="fecharModal()">Cancelar</button>
-          <button class="btn-salvar" (click)="salvarPeca()">Salvar</button>
+          <button class="btn-salvar" [disabled]="salvandoPeca" (click)="salvarPeca()">{{ salvandoPeca ? 'Salvando...' : 'Salvar' }}</button>
         </div>
       </div>
     </div>
